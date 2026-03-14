@@ -311,13 +311,17 @@ nav{
   padding:10px 26px;font-family:'Playfair Display',serif;
   font-size:1.45rem;font-weight:700;position:relative;letter-spacing:-0.3px;
   transition:background 0.25s, color 0.25s;
+  border-radius:3px 4px 2px 5px;
+  transform:rotate(-1deg);
 }
 .cat-stamp::before{
-  content:'';position:absolute;bottom:-5px;left:5px;right:-5px;top:5px;
+  content:'';position:absolute;bottom:-4px;left:4px;right:-4px;top:4px;
   border:2px solid var(--terra);z-index:-1;
   transition:border-color 0.25s;
+  border-radius:2px 3px 4px 2px;
+  transform:rotate(0.5deg);
 }
-.mcat.open .cat-stamp{background:var(--lime);color:var(--brown);}
+.mcat.open .cat-stamp{background:var(--lime);color:var(--brown);border-radius:4px 2px 5px 3px;transform:rotate(1deg);}
 .mcat.open .cat-stamp::before{border-color:var(--brown);}
 .cat-price{
   font-size:0.67rem;letter-spacing:0.15em;text-transform:uppercase;
@@ -369,6 +373,15 @@ nav{
 }
 .mitem-sub{font-family:'Courier New',Courier,monospace;font-size:0.7rem;color:var(--terra);white-space:nowrap;}
 
+.menu-receipt-footer{
+  background:var(--paper);padding:16px 30px 24px;
+  text-align:center;
+}
+.menu-receipt-footer-text{
+  font-family:'Courier New',Courier,monospace;font-size:0.65rem;
+  color:var(--brown);text-transform:uppercase;letter-spacing:0.25em;
+}
+
 .order-cta{
   background:var(--brown);margin:60px -60px -80px;
   padding:80px;text-align:center;position:relative;overflow:hidden;
@@ -412,9 +425,9 @@ nav{
 .contact-label{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--lime);margin-bottom:10px;}
 .contact-h1{
   font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:900;
-  letter-spacing:-3px;line-height:0.92;color:var(--paper);max-width:700px;
+  letter-spacing:-3px;line-height:0.92;color:var(--lime);max-width:700px;
 }
-.contact-h1 em{font-family:'DM Serif Display',serif;font-style:italic;color:var(--lime);display:block;}
+.contact-h1 em{font-family:'DM Serif Display',serif;font-style:italic;color:var(--paper);display:block;}
 .contact-body{background:var(--cream);padding:80px 60px 120px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
 .col-label{font-family:'Caveat',cursive;font-size:1rem;color:var(--terra);margin-bottom:6px;}
 .col-h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--brown);letter-spacing:-0.5px;margin-bottom:24px;}
@@ -937,6 +950,12 @@ footer{background:var(--brown);padding:44px 60px;display:flex;align-items:center
             <div class="mitem"><div class="mitem-icon"><svg><use href="#ico-roll"/></svg></div><div class="mitem-info"><div class="mitem-name">Spring Roll</div><div class="mitem-sub">$10 per dozen</div></div></div>
           </div>
         </div></div>
+      </div>
+
+      <div class="cat-tear" style="margin:20px 0 0;"><svg viewBox="0 0 800 20" fill="none"><path d="M0,10 Q20,2 40,10 Q60,18 80,10 Q100,2 120,10 Q140,18 160,10 Q180,2 200,10 Q220,18 240,10 Q260,2 280,10 Q300,18 320,10 Q340,2 360,10 Q380,18 400,10 Q420,2 440,10 Q460,18 480,10 Q500,2 520,10 Q540,18 560,10 Q580,2 600,10 Q620,18 640,10 Q660,2 680,10 Q700,18 720,10 Q740,2 760,10 Q780,18 800,10" stroke="#d4622a" stroke-width="1" fill="none" stroke-dasharray="3 3"/></svg></div>
+
+      <div class="menu-receipt-footer">
+        <div class="menu-receipt-footer-text">THANK YOU • SEE YOU SOON</div>
       </div>
 
       <div class="order-cta reveal">
