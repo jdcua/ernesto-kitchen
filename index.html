@@ -225,6 +225,23 @@ nav{
 .hdr-torn{line-height:0;position:relative;z-index:1;margin-top:-2px;}
 .hdr-torn svg{display:block;width:100%;}
 
+.menu-receipt-header{
+  background:var(--paper);padding:20px 30px 16px;
+  text-align:center;border-top:1px dashed var(--brown-light);
+}
+.menu-receipt-header-text{
+  font-family:'Courier New',Courier,monospace;font-size:0.7rem;
+  color:var(--brown);text-transform:uppercase;letter-spacing:0.2em;
+  display:inline-block;position:relative;
+}
+.menu-receipt-header-text::before,
+.menu-receipt-header-text::after{
+  content:'';position:absolute;top:50%;width:30px;height:1px;
+  background:linear-gradient(to right,transparent,var(--brown-light),transparent);
+}
+.menu-receipt-header-text::before{right:100%;margin-right:15px;}
+.menu-receipt-header-text::after{left:100%;margin-left:15px;}
+
 .menu-tabs-wrap{
   position:sticky;top:58px;z-index:100;
   background:transparent;padding:12px 20px;
@@ -337,25 +354,28 @@ nav{
 .mcat-body-inner{overflow:hidden;}
 .items-grid{
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;padding:20px 0 8px;
+  gap:8px;padding:12px 0 6px;
 }
 .mitem{
-  background:var(--cream);border:1.5px solid var(--cream3);
-  padding:15px 18px;display:flex;align-items:center;gap:14px;
+  background:var(--cream);border:1px solid var(--cream3);
+  padding:12px 14px;display:flex;align-items:center;gap:12px;
   position:relative;overflow:hidden;transition:all 0.22s;
 }
 .mitem::after{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lime);transition:width 0.22s;z-index:0;}
-.mitem:hover::after{width:4px;}
-.mitem:hover{border-color:var(--lime);transform:translateX(4px);box-shadow:0 4px 16px rgba(44,26,14,0.08);}
+.mitem:hover::after{width:3px;}
+.mitem:hover{border-color:var(--lime);transform:translateX(3px);}
 .mitem-icon{
-  width:44px;height:44px;background:var(--cream2);border:1.5px solid var(--cream3);
-  border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:36px;height:36px;background:var(--cream2);border:1px solid var(--cream3);
+  border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
   position:relative;z-index:1;
 }
-.mitem-icon svg{width:22px;height:22px;}
-.mitem-info{position:relative;z-index:1;}
-.mitem-name{font-family:'Lora',serif;font-size:1.0rem;font-weight:600;color:var(--brown);line-height:1.3;}
-.mitem-sub{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--terra);margin-top:1px;}
+.mitem-icon svg{width:18px;height:18px;}
+.mitem-info{position:relative;z-index:1;flex:1;display:flex;justify-content:space-between;align-items:center;}
+.mitem-name{font-family:'Courier New',Courier,monospace;font-size:0.8rem;font-weight:700;color:var(--brown);letter-spacing:0.3px;}
+.mitem-name::after{
+  content:'';flex:1;margin:0 8px;border-bottom:1px dotted var(--brown-light);min-width:20px;
+}
+.mitem-sub{font-family:'Courier New',Courier,monospace;font-size:0.7rem;color:var(--terra);white-space:nowrap;}
 
 .order-cta{
   background:var(--brown);margin:60px -60px -80px;
@@ -704,6 +724,10 @@ footer{background:var(--brown);padding:44px 60px;display:flex;align-items:center
       <p class="menu-hdr-notice">All tray sizes in Small, Medium and Large. Small 30x24x4.3 cm, Medium 30x24x6 cm, Large 33x26x7 cm. Prices subject to change.</p>
     </div>
     <div class="hdr-torn"><svg viewBox="0 0 1440 48" fill="none" preserveAspectRatio="none"><path d="M0,0 L0,48 Q18,36 36,46 Q54,56 72,42 Q90,28 108,44 Q126,56 144,42 Q162,28 180,44 Q198,56 216,40 Q234,26 252,42 Q270,56 288,42 Q306,28 324,44 Q342,56 360,42 Q378,28 396,44 Q414,56 432,40 Q450,26 468,44 Q486,56 504,42 Q522,28 540,44 Q558,56 576,42 Q594,28 612,44 Q630,56 648,42 Q666,28 684,44 Q702,56 720,42 Q738,28 756,44 Q774,56 792,42 Q810,28 828,44 Q846,56 864,40 Q882,26 900,44 Q918,56 936,42 Q954,28 972,44 Q990,56 1008,42 Q1026,28 1044,44 Q1062,56 1080,42 Q1098,28 1116,44 Q1134,56 1152,42 Q1170,28 1188,44 Q1206,56 1224,42 Q1242,28 1260,44 Q1278,56 1296,42 Q1314,28 1332,44 Q1350,56 1368,42 Q1386,28 1404,44 Q1422,56 1440,42 L1440,0 Z" fill="#2c1a0e"/></svg></div>
+
+    <div class="menu-receipt-header">
+      <div class="menu-receipt-header-text">Ernesto Kitchen • Calgary, AB</div>
+    </div>
 
     <div class="menu-tabs-wrap">
       <div class="menu-tabs">
