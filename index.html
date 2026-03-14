@@ -227,20 +227,12 @@ nav{
 
 .menu-receipt-header{
   background:var(--paper);padding:20px 30px 16px;
-  text-align:center;border-top:1px dashed var(--brown-light);
+  text-align:center;
 }
 .menu-receipt-header-text{
   font-family:'Courier New',Courier,monospace;font-size:0.7rem;
   color:var(--brown);text-transform:uppercase;letter-spacing:0.2em;
-  display:inline-block;position:relative;
 }
-.menu-receipt-header-text::before,
-.menu-receipt-header-text::after{
-  content:'';position:absolute;top:50%;width:30px;height:1px;
-  background:linear-gradient(to right,transparent,var(--brown-light),transparent);
-}
-.menu-receipt-header-text::before{right:100%;margin-right:15px;}
-.menu-receipt-header-text::after{left:100%;margin-left:15px;}
 
 .menu-tabs-wrap{
   position:sticky;top:58px;z-index:100;
