@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5000",
-    "dev:versionone": "vite versiononeernesto.html --host 0.0.0.0 --port 5001",
+    "dev:versionone": "vite --host 0.0.0.0 --port 5001",
     "build": "vite build",
-    "build:versionone": "vite build versiononeernesto.html",
+    "build:versionone": "vite build",
     "preview": "vite preview",
     "preview:versionone": "vite preview --host 0.0.0.0 --port 5001"
   },
