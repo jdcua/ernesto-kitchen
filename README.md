@@ -34,10 +34,28 @@ npm run dev
 
 The site will be available at `http://localhost:5000`
 
+### Running Multiple Versions
+
+This project supports running two different HTML versions:
+
+| Command | Description | Port |
+|---------|-------------|------|
+| `npm run dev` | Runs index.html (main version) | 5000 |
+| `npm run dev:versionone` | Runs versiononeernesto.html | 5001 |
+
+Both versions can run simultaneously on different ports.
+
 ### Build
 
 ```bash
 npm run build
+```
+
+### Build Specific Version
+
+```bash
+npm run build        # builds index.html
+npm run build:versionone  # builds versiononeernesto.html
 ```
 
 ### Preview Production Build
