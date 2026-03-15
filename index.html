@@ -455,36 +455,37 @@ nav {
   overflow-x: auto;
   scrollbar-width: none;
   border-bottom: 1px dashed rgba(28,15,4,0.15);
+  position: sticky;
+  top: 60px;
+  z-index: 100;
 }
 .menu-nav::-webkit-scrollbar { display: none; }
 
 .menu-nav-btn {
   font-family: 'Courier Prime', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--brown);
+  font-weight: 700;
   cursor: none;
-  padding: 20px 20px;
+  padding: 16px 24px;
   border: none;
-  background: none;
+  background: rgba(28,15,4,0.04);
   position: relative;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: color 0.2s;
-  border-right: 1px dashed rgba(28,15,4,0.12);
+  transition: all 0.2s;
+  border-right: 1px solid rgba(28,15,4,0.1);
 }
-.menu-nav-btn:first-child { padding-left: 0; }
-.menu-nav-btn:hover { color: var(--ink); }
+.menu-nav-btn:first-child { padding-left: 24px; }
+.menu-nav-btn:hover { 
+  color: var(--brown);
+  background: rgba(28,15,4,0.08);
+}
 .menu-nav-btn.active {
-  color: var(--ink);
+  color: var(--brown);
   font-weight: 700;
-}
-.menu-nav-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
   background: var(--lime);
 }
 
@@ -1006,7 +1007,7 @@ footer {
     <div>
       <p class="eyebrow">Our Story</p>
       <h2 class="story-heading">
-        Lutong bahay<br>na may <em>pagmamahal</em>
+        Handcrafted<br>with heart
       </h2>
       <div class="story-rule"></div>
       <p class="story-body">
@@ -1072,7 +1073,7 @@ footer {
   </svg>
 
   <!-- category nav on cream -->
-  <nav class="menu-nav">
+  <div class="menu-nav">
     <button class="menu-nav-btn active" onclick="switchCat('pork',this)">Pork</button>
     <button class="menu-nav-btn" onclick="switchCat('special',this)">Special Pork</button>
     <button class="menu-nav-btn" onclick="switchCat('chicken',this)">Chicken</button>
@@ -1082,7 +1083,7 @@ footer {
     <button class="menu-nav-btn" onclick="switchCat('seafood',this)">Seafood</button>
     <button class="menu-nav-btn" onclick="switchCat('noodles',this)">Noodles</button>
     <button class="menu-nav-btn" onclick="switchCat('spring',this)">Spring Roll</button>
-  </nav>
+  </div>
 
   <!-- menu body on cream -->
   <div class="menu-body">
