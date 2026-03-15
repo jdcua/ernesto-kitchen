@@ -7,6 +7,12 @@ export default defineConfig({
     port: 5000
   },
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        versionone: 'versiononeernesto.html'
+      }
+    }
   }
 })
