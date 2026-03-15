@@ -17,8 +17,30 @@ Authentic Filipino home cooking made with love. Every dish is made from scratch 
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm
+- **Git** - Version control
+- **Node.js 18+** 
+- **npm**
+
+#### Installing Git
+
+**macOS:**
+```bash
+brew install git
+```
+
+**Linux (Debian/Ubuntu):**
+```bash
+sudo apt update
+sudo apt install git
+```
+
+**Linux (Fedora):**
+```bash
+sudo dnf install git
+```
+
+**Windows:**
+Download from https://git-scm.com
 
 ### Installation
 
