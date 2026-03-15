@@ -1,1341 +1,1745 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ernesto Kitchen</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<style>
-:root {
-  --lime:    #c8f000;
-  --lime-dim: #a8cc00;
-  --brown:   #1c0f04;
-  --brown-mid: #2e1a08;
-  --brown-light: #4a2e12;
-  --cream:   #f2e8d5;
-  --cream-dark: #e8dbc4;
-  --rust:    #c4521a;
-  --muted:   #8a6a44;
-  --ink:     #1c0f04;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--lime);
-  color: var(--brown);
-  font-family: 'Courier Prime', monospace;
-  overflow-x: hidden;
-  cursor: none;
-}
-
-/* ── GLASSMORPHISM ─────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.glass-btn {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-}
-.glass-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* ── CUSTOM CURSOR ─────────────────────────────── */
-.cursor {
-  position: fixed;
-  width: 12px; height: 12px;
-  background: var(--brown);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: multiply;
-}
-.cursor.hover {
-  width: 40px; height: 40px;
-  background: var(--rust);
-}
-.cursor.glass-cursor {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  mix-blend-mode: normal;
-}
-
-/* ── NOISE ─────────────────────────────────────── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9000;
-}
-
-/* ── NAV ───────────────────────────────────────── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 500;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 48px;
-  mix-blend-mode: multiply;
-}
-.nav-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.05rem;
-  color: var(--brown);
-  text-decoration: none;
-  letter-spacing: 0.01em;
-}
-.nav-logo span { color: var(--rust); }
-.nav-links {
-  display: flex; gap: 36px; list-style: none;
-}
-.nav-links a {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--brown);
-  text-decoration: none;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-.nav-links a:hover { opacity: 1; }
-.nav-links a.active { opacity: 1; border-bottom: 1px solid var(--brown); padding-bottom: 2px; }
-
-/* ── HERO ──────────────────────────────────────── */
-#hero {
-  background: var(--lime);
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  position: relative;
-  overflow: hidden;
-  padding-top: 80px;
-}
-
-.hero-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 48px 0;
-  position: relative;
-  z-index: 2;
-}
-
-/* phrase-first hero */
-.hero-phrase {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.phrase-line {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(4.5rem, 11vw, 10rem);
-  line-height: 0.95;
-  color: var(--brown);
-  letter-spacing: -0.02em;
-  display: block;
-}
-.phrase-line-2 { padding-left: clamp(2rem, 6vw, 6rem); }
-.phrase-line-3 { padding-left: clamp(4rem, 12vw, 12rem); }
-.phrase-line em { font-style: italic; color: var(--brown); opacity: 0.45; }
-
-.hero-meta {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 28px 0 0;
-  border-top: 1px solid rgba(28,15,4,0.2);
-  margin-top: 20px;
-}
-
-.hero-identity {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.hero-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  color: var(--brown);
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.hero-location {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--brown);
-  opacity: 0.45;
-}
-
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 12px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  border: 1.5px solid var(--brown);
-  text-align: center;
-  padding: 12px;
-  transform: rotate(12deg);
-  opacity: 0.5;
-}
-.hero-badge-top  { font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; }
-.hero-badge-main { font-family: 'DM Serif Display', serif; font-size: 1.3rem; line-height: 1; }
-.hero-badge-sub  { font-size: 0.45rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
-
-.hero-scroll {
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--brown);
-  opacity: 0.4;
-}
-
-/* animated marquee strip */
-.hero-marquee-wrap {
-  background: var(--brown);
-  overflow: hidden;
-  padding: 14px 0;
-  margin-top: 32px;
-}
-.hero-marquee {
-  display: flex;
-  gap: 0;
-  animation: marquee 22s linear infinite;
-  white-space: nowrap;
-}
-.hero-marquee span {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--lime);
-  padding: 0 32px;
-  flex-shrink: 0;
-  opacity: 0.8;
-}
-.hero-marquee span.dot { color: var(--rust); opacity: 1; padding: 0 8px; }
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-/* ── SCALLOP ───────────────────────────────────── */
-.scallop-into-cream {
-  display: block;
-  background: var(--brown);
-  margin-top: -1px;
-}
-.scallop-into-lime {
-  display: block;
-  background: var(--lime);
-  margin-top: -1px;
-}
-.scallop-into-brown {
-  display: block;
-  background: var(--cream);
-  margin-top: -1px;
-}
-
-/* ── STORY BAND ─────────────────────────────────── */
-#story {
-  background: var(--cream);
-  padding: 80px 48px 0;
-  position: relative;
-}
-
-.story-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: start;
-  padding-bottom: 80px;
-}
-
-.eyebrow {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--rust);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 8px;
-}
-.eyebrow::before { content: '✦'; font-size: 0.45rem; }
-
-.story-heading {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(2.8rem, 5vw, 4.2rem);
-  line-height: 1.0;
-  color: var(--ink);
-}
-.story-heading em { font-style: italic; color: var(--rust); }
-
-.story-rule {
-  width: 40px; height: 2px;
-  background: var(--rust);
-  margin: 28px 0;
-}
-
-.story-body {
-  font-size: 0.88rem;
-  line-height: 1.85;
-  color: var(--muted);
-  max-width: 440px;
-}
-
-.btn-brown {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--brown);
-  color: var(--lime);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 15px 28px;
-  border: none;
-  cursor: none;
-  transition: transform 0.15s, box-shadow 0.15s;
-  margin-top: 40px;
-}
-.btn-brown:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: 4px 4px 0 var(--rust);
-}
-
-/* feature receipt */
-.feature-receipt {
-  border: 1px dashed rgba(28,15,4,0.2);
-  padding: 32px;
-  position: relative;
-}
-.feature-receipt::before {
-  content: 'ERNESTO.KITCHEN';
-  position: absolute;
-  top: -8px; left: 50%;
-  transform: translateX(-50%);
-  background: var(--cream);
-  padding: 0 12px;
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
-  color: var(--muted);
-}
-.receipt-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px dashed rgba(28,15,4,0.12);
-  gap: 16px;
-}
-.receipt-row:last-child { border-bottom: none; }
-.receipt-key {
-  font-size: 0.72rem;
-  color: var(--ink);
-  font-style: italic;
-}
-.receipt-val {
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-align: right;
-}
-
-/* ── MENU SECTION ───────────────────────────────── */
-#menu {
-  background: var(--brown);
-  position: relative;
-}
-
-.menu-header {
-  background: var(--lime);
-  padding: 72px 48px 48px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 40px;
-}
-
-.menu-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(5rem, 12vw, 10rem);
-  line-height: 0.85;
-  color: var(--brown);
-  letter-spacing: 0.01em;
-}
-
-.menu-tagline {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: clamp(1rem, 2vw, 1.4rem);
-  color: var(--brown);
-  opacity: 0.6;
-  margin-top: 8px;
-}
-
-.menu-header-right {
-  text-align: right;
-  padding-bottom: 8px;
-}
-.menu-note {
-  font-size: 0.65rem;
-  color: var(--brown);
-  opacity: 0.5;
-  line-height: 1.6;
-  max-width: 280px;
-  font-style: italic;
-}
-
-/* category nav — on the cream paper after scallop */
-.menu-nav {
-  background: var(--cream);
-  padding: 0 48px;
-  display: flex;
-  align-items: stretch;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: 1px dashed rgba(28,15,4,0.15);
-  position: sticky;
-  top: 60px;
-  z-index: 100;
-}
-.menu-nav::-webkit-scrollbar { display: none; }
-
-.menu-nav-btn {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--brown);
-  font-weight: 700;
-  cursor: none;
-  padding: 16px 24px;
-  border: none;
-  background: rgba(28,15,4,0.04);
-  position: relative;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: all 0.2s;
-  border-right: 1px solid rgba(28,15,4,0.1);
-}
-.menu-nav-btn:first-child { padding-left: 24px; }
-.menu-nav-btn:hover { 
-  color: var(--brown);
-  background: rgba(28,15,4,0.08);
-}
-.menu-nav-btn.active {
-  color: var(--brown);
-  font-weight: 700;
-  background: var(--lime);
-}
-
-/* menu body */
-.menu-body {
-  background: var(--cream);
-  padding: 0 48px 60px;
-}
-
-.menu-cat { display: none; }
-.menu-cat.active { display: block; }
-
-.cat-header {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-  padding: 44px 0 20px;
-  border-bottom: 2px solid var(--brown);
-  margin-bottom: 0;
-}
-
-.cat-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  color: var(--brown);
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-
-.cat-price {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--rust);
-  padding: 4px 10px;
-  border: 1px solid var(--rust);
-  white-space: nowrap;
-  margin-left: auto;
-}
-
-/* dish rows — dense and rich */
-.dish {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: baseline;
-  gap: 20px;
-  padding: 18px 0;
-  border-bottom: 1px dashed rgba(28,15,4,0.12);
-  transition: background 0.15s;
-  margin: 0 -48px;
-  padding-left: 48px;
-  padding-right: 48px;
-}
-.dish:hover {
-  background: rgba(200,240,0,0.08);
-}
-.dish:hover .dish-name { color: var(--rust); }
-
-.dish-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.25rem;
-  color: var(--ink);
-  transition: color 0.2s;
-  margin-bottom: 3px;
-}
-.dish-desc {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-style: italic;
-  line-height: 1.5;
-}
-
-/* ── ORDER CTA ──────────────────────────────────── */
-#order {
-  background: var(--lime);
-  padding: 100px 48px;
-  position: relative;
-  overflow: hidden;
-}
-
-.order-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: center;
-}
-
-.order-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(4rem, 9vw, 8rem);
-  line-height: 0.88;
-  color: var(--brown);
-  letter-spacing: 0.01em;
-  margin-bottom: 24px;
-}
-.order-heading em {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: 0.65em;
-  display: block;
-  color: var(--brown);
-  opacity: 0.5;
-}
-
-.order-sub {
-  font-size: 0.82rem;
-  color: var(--brown);
-  opacity: 0.6;
-  font-style: italic;
-  margin-bottom: 40px;
-  line-height: 1.6;
-}
-
-.order-btns {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn-brown-solid {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--brown);
-  color: var(--lime);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 15px 28px;
-  border: none;
-  cursor: none;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-brown-solid:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: 4px 4px 0 var(--rust);
-}
-
-.btn-outline-brown {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: transparent;
-  color: var(--brown);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 15px 28px;
-  border: 1.5px solid var(--brown);
-  cursor: none;
-  transition: background 0.15s, color 0.15s;
-}
-.btn-outline-brown:hover {
-  background: var(--brown);
-  color: var(--lime);
-}
-
-/* steps */
-.order-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.order-step {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  padding: 24px 0;
-  border-bottom: 1px solid rgba(28,15,4,0.12);
-}
-.order-step:first-child { border-top: 1px solid rgba(28,15,4,0.12); }
-.step-n {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.5rem;
-  color: rgba(28,15,4,0.15);
-  line-height: 1;
-  flex-shrink: 0;
-  width: 36px;
-}
-.step-txt {
-  font-size: 0.82rem;
-  color: var(--brown);
-  opacity: 0.7;
-  font-style: italic;
-  line-height: 1.6;
-  padding-top: 6px;
-}
-
-/* ── CONTACT ────────────────────────────────────── */
-#contact {
-  background: var(--brown);
-  position: relative;
-}
-
-.contact-inner {
-  padding: 80px 48px 100px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.contact-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 7vw, 6rem);
-  line-height: 0.9;
-  color: var(--lime);
-  margin-bottom: 8px;
-  letter-spacing: 0.01em;
-}
-.contact-heading em {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: 0.55em;
-  color: var(--cream);
-  opacity: 0.5;
-  display: block;
-  letter-spacing: 0;
-}
-
-.contact-list {
-  list-style: none;
-  margin-top: 40px;
-  border-top: 1px dashed rgba(242,232,213,0.15);
-}
-.contact-list li {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 18px 0;
-  border-bottom: 1px dashed rgba(242,232,213,0.15);
-}
-.cl-label {
-  font-size: 0.55rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--rust);
-}
-.cl-value {
-  font-size: 0.85rem;
-  color: var(--cream);
-  opacity: 0.45;
-  font-style: italic;
-}
-
-/* order card on dark */
-.dark-order-card {
-  border: 1px dashed rgba(242,232,213,0.15);
-  padding: 48px;
-}
-.dark-order-card .eyebrow { color: var(--lime); opacity: 0.7; }
-.dark-order-card .eyebrow::before { color: var(--lime); }
-
-.doc-heading {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2rem;
-  color: var(--cream);
-  margin-bottom: 8px;
-  line-height: 1.1;
-}
-.doc-heading em { color: var(--lime); font-style: italic; }
-
-.doc-sub {
-  font-size: 0.72rem;
-  color: var(--cream);
-  opacity: 0.35;
-  font-style: italic;
-  margin-bottom: 36px;
-}
-
-.dark-steps {
-  list-style: none;
-  border-top: 1px dashed rgba(242,232,213,0.1);
-}
-.dark-steps li {
-  display: flex;
-  gap: 20px;
-  padding: 18px 0;
-  border-bottom: 1px dashed rgba(242,232,213,0.1);
-  align-items: flex-start;
-}
-.ds-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
-  color: rgba(242,232,213,0.1);
-  line-height: 1;
-  width: 28px;
-  flex-shrink: 0;
-}
-.ds-txt {
-  font-size: 0.78rem;
-  color: var(--cream);
-  opacity: 0.45;
-  font-style: italic;
-  line-height: 1.6;
-  padding-top: 4px;
-}
-
-.dark-order-card .btn-brown-solid {
-  margin-top: 32px;
-  width: 100%;
-  justify-content: center;
-}
-
-/* ── FOOTER ─────────────────────────────────────── */
-footer {
-  background: var(--brown);
-  border-top: 1px solid rgba(242,232,213,0.06);
-  padding: 36px 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 0.95rem;
-  color: var(--cream);
-  opacity: 0.5;
-}
-.footer-logo span { color: var(--rust); }
-.footer-copy {
-  font-size: 0.58rem;
-  letter-spacing: 0.15em;
-  color: var(--cream);
-  opacity: 0.25;
-  text-transform: uppercase;
-}
-
-/* ── STICKY ORDER BUTTON ────────────────────────── */
-.sticky-order {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  z-index: 400;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.sticky-btn {
-  background: var(--lime);
-  color: var(--brown);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 12px 20px;
-  border: none;
-  cursor: none;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.sticky-btn:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: 3px 3px 0 var(--rust);
-}
-.sticky-up {
-  background: var(--brown-mid);
-  color: var(--cream);
-  border: 1px dashed rgba(242,232,213,0.2);
-  padding: 12px 14px;
-}
-.sticky-up:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: 3px 3px 0 rgba(242,232,213,0.1);
-}
-
-/* Glass sticky button */
-.sticky-btn.glass-btn {
-  background: rgba(200, 240, 0, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.sticky-btn.glass-btn:hover {
-  background: rgba(200, 240, 0, 0.85);
-}
-
-/* ── ANIMATIONS ─────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fu  { animation: fadeUp 0.7s ease both; }
-.fu2 { animation: fadeUp 0.7s 0.12s ease both; }
-.fu3 { animation: fadeUp 0.7s 0.22s ease both; }
-.fu4 { animation: fadeUp 0.7s 0.32s ease both; }
-
-/* Glass hover effect on cards */
-.feature-receipt.glass-card {
-  position: relative;
-  overflow: hidden;
-}
-.feature-receipt.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transition: left 0.5s ease;
-}
-.feature-receipt.glass-card:hover::before {
-  left: 100%;
-}
-
-/* Menu dish hover glass effect */
-.dish:hover {
-  background: rgba(200, 240, 0, 0.12) !important;
-}
-
-/* Responsive */
-@media(max-width: 900px) {
-  .story-grid { grid-template-columns: 1fr; gap: 40px; }
-  .order-grid { grid-template-columns: 1fr; gap: 40px; }
-  .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-  .menu-header { grid-template-columns: 1fr; }
-  .menu-header-right { text-align: left; }
-}
-@media(max-width: 600px) {
-  nav { padding: 16px 24px; }
-  .nav-links { display: none; }
-  .hero-inner { padding: 0 24px; }
-  .menu-nav { padding: 0 24px; }
-  .menu-body { padding: 0 24px 40px; }
-  .dish { padding-left: 24px; padding-right: 24px; margin: 0 -24px; }
-  #order, #contact, .story-grid, .contact-inner { padding-left: 24px; padding-right: 24px; }
-  .sticky-order { right: 16px; bottom: 16px; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ernesto Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --lime: #c8f000;
+      --lime-dim: #a8cc00;
+      --brown: #1c0f04;
+      --brown-mid: #2e1a08;
+      --brown-light: #4a2e12;
+      --cream: #f2e8d5;
+      --cream-dark: #e8dbc4;
+      --rust: #c4521a;
+      --muted: #8a6a44;
+      --ink: #1c0f04;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--lime);
+      color: var(--brown);
+      font-family: 'Courier Prime', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── GLASSMORPHISM ─────────────────────────────── */
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ── CUSTOM CURSOR ─────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--brown);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: multiply;
+    }
+
+    .cursor.hover {
+      width: 40px;
+      height: 40px;
+      background: var(--rust);
+    }
+
+    .cursor.glass-cursor {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      mix-blend-mode: normal;
+    }
+
+    /* ── NOISE ─────────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* ── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      color: var(--brown);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-logo span {
+      color: var(--rust);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brown);
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .nav-links a.active {
+      opacity: 1;
+      border-bottom: 1px solid var(--brown);
+      padding-bottom: 2px;
+    }
+
+    /* ── HERO ──────────────────────────────────────── */
+    #hero {
+      background: var(--lime);
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* phrase-first hero */
+    .hero-phrase {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .phrase-line {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      line-height: 0.95;
+      color: var(--brown);
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .phrase-line-2 {
+      padding-left: clamp(2rem, 6vw, 6rem);
+    }
+
+    .phrase-line-3 {
+      padding-left: clamp(4rem, 12vw, 12rem);
+    }
+
+    .phrase-line em {
+      font-style: italic;
+      color: var(--brown);
+      opacity: 0.45;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 28px 0 0;
+      border-top: 1px solid rgba(28, 15, 4, 0.2);
+      margin-top: 20px;
+    }
+
+    .hero-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      color: var(--brown);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .hero-location {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown);
+      opacity: 0.45;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1.5px solid var(--brown);
+      text-align: center;
+      padding: 12px;
+      transform: rotate(12deg);
+      opacity: 0.5;
+    }
+
+    .hero-badge-top {
+      font-size: 0.48rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge-main {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .hero-badge-sub {
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .hero-scroll {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--brown);
+      opacity: 0.4;
+    }
+
+    /* animated marquee strip */
+    .hero-marquee-wrap {
+      background: var(--brown);
+      overflow: hidden;
+      padding: 14px 0;
+      margin-top: 32px;
+    }
+
+    .hero-marquee {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+
+    .hero-marquee span {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--lime);
+      padding: 0 32px;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
+    .hero-marquee span.dot {
+      color: var(--rust);
+      opacity: 1;
+      padding: 0 8px;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ── SCALLOP ───────────────────────────────────── */
+    .scallop-into-cream {
+      display: block;
+      background: var(--brown);
+      margin-top: -1px;
+    }
+
+    .scallop-into-lime {
+      display: block;
+      background: var(--lime);
+      margin-top: -1px;
+    }
+
+    .scallop-into-brown {
+      display: block;
+      background: var(--cream);
+      margin-top: -1px;
+    }
+
+    /* ── STORY BAND ─────────────────────────────────── */
+    #story {
+      background: var(--cream);
+      padding: 80px 48px 0;
+      position: relative;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+      padding-bottom: 80px;
+    }
+
+    .eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      content: '✦';
+      font-size: 0.45rem;
+    }
+
+    .story-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.0;
+      color: var(--ink);
+    }
+
+    .story-heading em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .story-rule {
+      width: 40px;
+      height: 2px;
+      background: var(--rust);
+      margin: 28px 0;
+    }
+
+    .story-body {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 440px;
+    }
+
+    .btn-brown {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--brown);
+      color: var(--lime);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 15px 28px;
+      border: none;
+      cursor: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 40px;
+    }
+
+    .btn-brown:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--rust);
+    }
+
+    /* feature receipt */
+    .feature-receipt {
+      border: 1px dashed rgba(28, 15, 4, 0.2);
+      padding: 32px;
+      position: relative;
+    }
+
+    .feature-receipt::before {
+      content: 'ERNESTO.KITCHEN';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cream);
+      padding: 0 12px;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px dashed rgba(28, 15, 4, 0.12);
+      gap: 16px;
+    }
+
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+
+    .receipt-key {
+      font-size: 0.72rem;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    .receipt-val {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ── MENU SECTION ───────────────────────────────── */
+    #menu {
+      background: var(--brown);
+      position: relative;
+    }
+
+    .menu-header {
+      background: var(--lime);
+      padding: 72px 48px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+    }
+
+    .menu-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.85;
+      color: var(--brown);
+      letter-spacing: 0.01em;
+    }
+
+    .menu-tagline {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--brown);
+      opacity: 0.6;
+      margin-top: 8px;
+    }
+
+    .menu-header-right {
+      text-align: right;
+      padding-bottom: 8px;
+    }
+
+    .menu-note {
+      font-size: 0.65rem;
+      color: var(--brown);
+      opacity: 0.5;
+      line-height: 1.6;
+      max-width: 280px;
+      font-style: italic;
+    }
+
+    /* category nav — on the cream paper after scallop */
+    .menu-nav {
+      background: var(--cream);
+      padding: 0 48px;
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px dashed rgba(28, 15, 4, 0.15);
+      position: sticky;
+      top: 60px;
+      z-index: 100;
+    }
+
+    .menu-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-nav-btn {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown);
+      font-weight: 700;
+      cursor: none;
+      padding: 16px 24px;
+      border: none;
+      background: rgba(28, 15, 4, 0.04);
+      position: relative;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      border-right: 1px solid rgba(28, 15, 4, 0.1);
+    }
+
+    .menu-nav-btn:first-child {
+      padding-left: 24px;
+    }
+
+    .menu-nav-btn:hover {
+      color: var(--brown);
+      background: rgba(28, 15, 4, 0.08);
+    }
+
+    .menu-nav-btn.active {
+      color: var(--brown);
+      font-weight: 700;
+      background: var(--lime);
+    }
+
+    /* menu body */
+    .menu-body {
+      background: var(--cream);
+      padding: 0 48px 60px;
+    }
+
+    .menu-cat {
+      display: none;
+    }
+
+    .menu-cat.active {
+      display: block;
+    }
+
+    .cat-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 44px 0 20px;
+      border-bottom: 2px solid var(--brown);
+      margin-bottom: 0;
+    }
+
+    .cat-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      color: var(--brown);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .cat-price {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      padding: 4px 10px;
+      border: 1px solid var(--rust);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* dish rows — dense and rich */
+    .dish {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px dashed rgba(28, 15, 4, 0.12);
+      transition: background 0.15s;
+      margin: 0 -48px;
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+
+    .dish:hover {
+      background: rgba(200, 240, 0, 0.08);
+    }
+
+    .dish:hover .dish-name {
+      color: var(--rust);
+    }
+
+    .dish-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--ink);
+      transition: color 0.2s;
+      margin-bottom: 3px;
+    }
+
+    .dish-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── ORDER CTA ──────────────────────────────────── */
+    #order {
+      background: var(--lime);
+      padding: 100px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .order-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .order-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 0.88;
+      color: var(--brown);
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
+    }
+
+    .order-heading em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 0.65em;
+      display: block;
+      color: var(--brown);
+      opacity: 0.5;
+    }
+
+    .order-sub {
+      font-size: 0.82rem;
+      color: var(--brown);
+      opacity: 0.6;
+      font-style: italic;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .order-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-brown-solid {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--brown);
+      color: var(--lime);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 15px 28px;
+      border: none;
+      cursor: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-brown-solid:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--rust);
+    }
+
+    .btn-outline-brown {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--brown);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 15px 28px;
+      border: 1.5px solid var(--brown);
+      cursor: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-outline-brown:hover {
+      background: var(--brown);
+      color: var(--lime);
+    }
+
+    /* steps */
+    .order-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .order-step {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(28, 15, 4, 0.12);
+    }
+
+    .order-step:first-child {
+      border-top: 1px solid rgba(28, 15, 4, 0.12);
+    }
+
+    .step-n {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: rgba(28, 15, 4, 0.15);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 36px;
+    }
+
+    .step-txt {
+      font-size: 0.82rem;
+      color: var(--brown);
+      opacity: 0.7;
+      font-style: italic;
+      line-height: 1.6;
+      padding-top: 6px;
+    }
+
+    /* ── CONTACT ────────────────────────────────────── */
+    #contact {
+      background: var(--brown);
+      position: relative;
+    }
+
+    .contact-inner {
+      padding: 80px 48px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      line-height: 0.9;
+      color: var(--lime);
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .contact-heading em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 0.55em;
+      color: var(--cream);
+      opacity: 0.5;
+      display: block;
+      letter-spacing: 0;
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 40px;
+      border-top: 1px dashed rgba(242, 232, 213, 0.15);
+    }
+
+    .contact-list li {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 18px 0;
+      border-bottom: 1px dashed rgba(242, 232, 213, 0.15);
+    }
+
+    .cl-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .cl-value {
+      font-size: 0.85rem;
+      color: var(--cream);
+      opacity: 0.45;
+      font-style: italic;
+    }
+
+    /* order card on dark */
+    .dark-order-card {
+      border: 1px dashed rgba(242, 232, 213, 0.15);
+      padding: 48px;
+    }
+
+    .dark-order-card .eyebrow {
+      color: var(--lime);
+      opacity: 0.7;
+    }
+
+    .dark-order-card .eyebrow::before {
+      color: var(--lime);
+    }
+
+    .doc-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--cream);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .doc-heading em {
+      color: var(--lime);
+      font-style: italic;
+    }
+
+    .doc-sub {
+      font-size: 0.72rem;
+      color: var(--cream);
+      opacity: 0.35;
+      font-style: italic;
+      margin-bottom: 36px;
+    }
+
+    .dark-steps {
+      list-style: none;
+      border-top: 1px dashed rgba(242, 232, 213, 0.1);
+    }
+
+    .dark-steps li {
+      display: flex;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px dashed rgba(242, 232, 213, 0.1);
+      align-items: flex-start;
+    }
+
+    .ds-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: rgba(242, 232, 213, 0.1);
+      line-height: 1;
+      width: 28px;
+      flex-shrink: 0;
+    }
+
+    .ds-txt {
+      font-size: 0.78rem;
+      color: var(--cream);
+      opacity: 0.45;
+      font-style: italic;
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+
+    .dark-order-card .btn-brown-solid {
+      margin-top: 32px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--brown);
+      border-top: 1px solid rgba(242, 232, 213, 0.06);
+      padding: 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--cream);
+      opacity: 0.5;
+    }
+
+    .footer-logo span {
+      color: var(--rust);
+    }
+
+    .footer-copy {
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--cream);
+      opacity: 0.25;
+      text-transform: uppercase;
+    }
+
+    /* ── STICKY ORDER BUTTON ────────────────────────── */
+    .sticky-order {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 400;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sticky-btn {
+      background: var(--lime);
+      color: var(--brown);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border: none;
+      cursor: none;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .sticky-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 3px 3px 0 var(--rust);
+    }
+
+    .sticky-up {
+      background: var(--brown-mid);
+      color: var(--cream);
+      border: 1px dashed rgba(242, 232, 213, 0.2);
+      padding: 12px 14px;
+    }
+
+    .sticky-up:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 3px 3px 0 rgba(242, 232, 213, 0.1);
+    }
+
+    /* Glass sticky button */
+    .sticky-btn.glass-btn {
+      background: rgba(200, 240, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .sticky-btn.glass-btn:hover {
+      background: rgba(200, 240, 0, 0.85);
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fu {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .fu2 {
+      animation: fadeUp 0.7s 0.12s ease both;
+    }
+
+    .fu3 {
+      animation: fadeUp 0.7s 0.22s ease both;
+    }
+
+    .fu4 {
+      animation: fadeUp 0.7s 0.32s ease both;
+    }
+
+    /* Glass hover effect on cards */
+    .feature-receipt.glass-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-receipt.glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-receipt.glass-card:hover::before {
+      left: 100%;
+    }
+
+    /* Menu dish hover glass effect */
+    .dish:hover {
+      background: rgba(200, 240, 0, 0.12) !important;
+    }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .order-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .menu-header {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-header-right {
+        text-align: left;
+      }
+    }
+
+    @media(max-width: 600px) {
+      nav {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-inner {
+        padding: 0 24px;
+      }
+
+      .menu-nav {
+        padding: 0 24px;
+      }
+
+      .menu-body {
+        padding: 0 24px 40px;
+      }
+
+      .dish {
+        padding-left: 24px;
+        padding-right: 24px;
+        margin: 0 -24px;
+      }
+
+      #order,
+      #contact,
+      .story-grid,
+      .contact-inner {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .sticky-order {
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="cursor" id="cursor"></div>
+  <div class="cursor" id="cursor"></div>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">Ernesto<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#hero" class="active">Home</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Ernesto<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- ══════════════════════════════ HERO -->
-<section id="hero">
-  <div class="hero-inner">
+  <!-- ══════════════════════════════ HERO -->
+  <section id="hero">
+    <div class="hero-inner">
 
-    <!-- phrase lands first, massive -->
-    <div class="hero-phrase fu">
-      <span class="phrase-line">Lutong</span>
-      <span class="phrase-line phrase-line-2">bahay na</span>
-      <span class="phrase-line phrase-line-3">may <em>pagmamahal</em></span>
-    </div>
-
-    <div class="hero-meta fu2">
-      <div class="hero-identity">
-        <span class="hero-name">ERNESTO KITCHEN</span>
-        <span class="hero-location">Calgary, AB &nbsp;·&nbsp; Orders by request</span>
+      <!-- phrase lands first, massive -->
+      <div class="hero-phrase fu">
+        <span class="phrase-line">Lutong</span>
+        <span class="phrase-line phrase-line-2">bahay na</span>
+        <span class="phrase-line phrase-line-3">may <em>pagmamahal</em></span>
       </div>
-      <div class="hero-right">
-        <div class="hero-badge glass-card">
-          <span class="hero-badge-top">Homemade</span>
-          <span class="hero-badge-main">Since<br>Day<br>One</span>
-          <span class="hero-badge-sub">Calgary AB</span>
-        </div>
-        <span class="hero-scroll">Scroll ↓</span>
-      </div>
-    </div>
 
-  </div>
-
-  <!-- brown marquee strip at base of hero -->
-  <div class="hero-marquee-wrap fu3">
-    <div class="hero-marquee">
-      <span>Pork</span><span class="dot">✦</span>
-      <span>Chicken</span><span class="dot">✦</span>
-      <span>Beef</span><span class="dot">✦</span>
-      <span>Seafood</span><span class="dot">✦</span>
-      <span>Noodles</span><span class="dot">✦</span>
-      <span>Roasted</span><span class="dot">✦</span>
-      <span>Vegetable</span><span class="dot">✦</span>
-      <span>Spring Roll</span><span class="dot">✦</span>
-      <span>Special Pork</span><span class="dot">✦</span>
-      <span>Pork</span><span class="dot">✦</span>
-      <span>Chicken</span><span class="dot">✦</span>
-      <span>Beef</span><span class="dot">✦</span>
-      <span>Seafood</span><span class="dot">✦</span>
-      <span>Noodles</span><span class="dot">✦</span>
-      <span>Roasted</span><span class="dot">✦</span>
-      <span>Vegetable</span><span class="dot">✦</span>
-      <span>Spring Roll</span><span class="dot">✦</span>
-      <span>Special Pork</span><span class="dot">✦</span>
-    </div>
-  </div>
-</section>
-
-<!-- scallop lime → cream -->
-<svg class="scallop-into-cream" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <path d="M0,56 L0,28 Q20,0 40,28 Q60,56 80,28 Q100,0 120,28 Q140,56 160,28 Q180,0 200,28 Q220,56 240,28 Q260,0 280,28 Q300,56 320,28 Q340,0 360,28 Q380,56 400,28 Q420,0 440,28 Q460,56 480,28 Q500,0 520,28 Q540,56 560,28 Q580,0 600,28 Q620,56 640,28 Q660,0 680,28 Q700,56 720,28 Q740,0 760,28 Q780,56 800,28 Q820,0 840,28 Q860,56 880,28 Q900,0 920,28 Q940,56 960,28 Q980,0 1000,28 Q1020,56 1040,28 Q1060,0 1080,28 Q1100,56 1120,28 Q1140,0 1160,28 Q1180,56 1200,28 Q1220,0 1240,28 Q1260,56 1280,28 Q1300,0 1320,28 Q1340,56 1360,28 Q1380,0 1400,28 Q1420,56 1440,28 L1440,56 Z" fill="#f2e8d5"/>
-</svg>
-
-<!-- ══════════════════════════════ STORY -->
-<section id="story">
-  <div class="story-grid">
-    <div>
-      <p class="eyebrow">Our Story</p>
-      <h2 class="story-heading">
-        Handcrafted<br>with heart
-      </h2>
-      <div class="story-rule"></div>
-      <p class="story-body">
-        Home-cooked with love. Every tray carries the flavours passed down through generations — the kind of food that makes a house feel like home, no matter where you are. Made fresh for every single order, no exceptions.
-      </p>
-      <a href="#menu" class="btn-brown">Browse the menu →</a>
-    </div>
-
-    <div>
-      <div class="feature-receipt glass-card">
-        <div class="receipt-row">
-          <span class="receipt-key">Made fresh per order</span>
-          <span class="receipt-val">Always</span>
+      <div class="hero-meta fu2">
+        <div class="hero-identity">
+          <span class="hero-name">ERNESTO KITCHEN</span>
+          <span class="hero-location">Calgary, AB &nbsp;·&nbsp; Orders by request</span>
         </div>
-        <div class="receipt-row">
-          <span class="receipt-key">Homemade since</span>
-          <span class="receipt-val">Day One</span>
-        </div>
-        <div class="receipt-row">
-          <span class="receipt-key">Tray sizes</span>
-          <span class="receipt-val">SML · MED · LRG</span>
-        </div>
-        <div class="receipt-row">
-          <span class="receipt-key">Location</span>
-          <span class="receipt-val">Calgary, AB</span>
-        </div>
-        <div class="receipt-row">
-          <span class="receipt-key">Order method</span>
-          <span class="receipt-val">By request</span>
-        </div>
-        <div class="receipt-row">
-          <span class="receipt-key">Shortcuts taken</span>
-          <span class="receipt-val">None</span>
+        <div class="hero-right">
+          <div class="hero-badge glass-card">
+            <span class="hero-badge-top">Homemade</span>
+            <span class="hero-badge-main">Since<br>Day<br>One</span>
+            <span class="hero-badge-sub">Calgary AB</span>
+          </div>
+          <span class="hero-scroll">Scroll ↓</span>
         </div>
       </div>
+
     </div>
-  </div>
-</section>
 
-<!-- scallop cream → brown (via lime header) -->
-<svg class="scallop-into-brown" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <path d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z" fill="#c8f000"/>
-</svg>
-
-<!-- ══════════════════════════════ MENU -->
-<section id="menu">
-
-  <!-- lime header -->
-  <div class="menu-header">
-    <div class="menu-header-left">
-      <p class="eyebrow" style="color: rgba(28,15,4,0.5);">What's Cooking</p>
-      <h2 class="menu-title">Our Menu</h2>
-      <p class="menu-tagline">Lutong bahay na may pagmamahal</p>
+    <!-- brown marquee strip at base of hero -->
+    <div class="hero-marquee-wrap fu3">
+      <div class="hero-marquee">
+        <span>Pork</span><span class="dot">✦</span>
+        <span>Chicken</span><span class="dot">✦</span>
+        <span>Beef</span><span class="dot">✦</span>
+        <span>Seafood</span><span class="dot">✦</span>
+        <span>Noodles</span><span class="dot">✦</span>
+        <span>Roasted</span><span class="dot">✦</span>
+        <span>Vegetable</span><span class="dot">✦</span>
+        <span>Spring Roll</span><span class="dot">✦</span>
+        <span>Special Pork</span><span class="dot">✦</span>
+        <span>Pork</span><span class="dot">✦</span>
+        <span>Chicken</span><span class="dot">✦</span>
+        <span>Beef</span><span class="dot">✦</span>
+        <span>Seafood</span><span class="dot">✦</span>
+        <span>Noodles</span><span class="dot">✦</span>
+        <span>Roasted</span><span class="dot">✦</span>
+        <span>Vegetable</span><span class="dot">✦</span>
+        <span>Spring Roll</span><span class="dot">✦</span>
+        <span>Special Pork</span><span class="dot">✦</span>
+      </div>
     </div>
-    <div class="menu-header-right">
-      <p class="menu-note">All tray sizes in Small, Medium and Large.<br>Small 30×24×4.3 cm · Medium 30×24×6 cm<br>Large 33×26×7 cm · Prices subject to change.</p>
-    </div>
-  </div>
+  </section>
 
-  <!-- scallop lime → cream for nav -->
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block; background: var(--lime); margin-bottom:-1px;">
-    <path d="M0,56 L0,28 Q20,0 40,28 Q60,56 80,28 Q100,0 120,28 Q140,56 160,28 Q180,0 200,28 Q220,56 240,28 Q260,0 280,28 Q300,56 320,28 Q340,0 360,28 Q380,56 400,28 Q420,0 440,28 Q460,56 480,28 Q500,0 520,28 Q540,56 560,28 Q580,0 600,28 Q620,56 640,28 Q660,0 680,28 Q700,56 720,28 Q740,0 760,28 Q780,56 800,28 Q820,0 840,28 Q860,56 880,28 Q900,0 920,28 Q940,56 960,28 Q980,0 1000,28 Q1020,56 1040,28 Q1060,0 1080,28 Q1100,56 1120,28 Q1140,0 1160,28 Q1180,56 1200,28 Q1220,0 1240,28 Q1260,56 1280,28 Q1300,0 1320,28 Q1340,56 1360,28 Q1380,0 1400,28 Q1420,56 1440,28 L1440,56 Z" fill="#f2e8d5"/>
+  <!-- scallop lime → cream -->
+  <svg class="scallop-into-cream" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path
+      d="M0,56 L0,28 Q20,0 40,28 Q60,56 80,28 Q100,0 120,28 Q140,56 160,28 Q180,0 200,28 Q220,56 240,28 Q260,0 280,28 Q300,56 320,28 Q340,0 360,28 Q380,56 400,28 Q420,0 440,28 Q460,56 480,28 Q500,0 520,28 Q540,56 560,28 Q580,0 600,28 Q620,56 640,28 Q660,0 680,28 Q700,56 720,28 Q740,0 760,28 Q780,56 800,28 Q820,0 840,28 Q860,56 880,28 Q900,0 920,28 Q940,56 960,28 Q980,0 1000,28 Q1020,56 1040,28 Q1060,0 1080,28 Q1100,56 1120,28 Q1140,0 1160,28 Q1180,56 1200,28 Q1220,0 1240,28 Q1260,56 1280,28 Q1300,0 1320,28 Q1340,56 1360,28 Q1380,0 1400,28 Q1420,56 1440,28 L1440,56 Z"
+      fill="#f2e8d5" />
   </svg>
 
-  <!-- category nav on cream -->
-  <div class="menu-nav">
-    <button class="menu-nav-btn active" onclick="switchCat('pork',this)">Pork</button>
-    <button class="menu-nav-btn" onclick="switchCat('special',this)">Special Pork</button>
-    <button class="menu-nav-btn" onclick="switchCat('chicken',this)">Chicken</button>
-    <button class="menu-nav-btn" onclick="switchCat('beef',this)">Beef</button>
-    <button class="menu-nav-btn" onclick="switchCat('roasted',this)">Roasted</button>
-    <button class="menu-nav-btn" onclick="switchCat('veg',this)">Vegetable</button>
-    <button class="menu-nav-btn" onclick="switchCat('seafood',this)">Seafood</button>
-    <button class="menu-nav-btn" onclick="switchCat('noodles',this)">Noodles</button>
-    <button class="menu-nav-btn" onclick="switchCat('spring',this)">Spring Roll</button>
+  <!-- ══════════════════════════════ STORY -->
+  <section id="story">
+    <div class="story-grid">
+      <div>
+        <p class="eyebrow">Our Story</p>
+        <h2 class="story-heading">
+          Handcrafted<br>with heart
+        </h2>
+        <div class="story-rule"></div>
+        <p class="story-body">
+          Home-cooked with love. Every tray carries the flavours passed down through generations — the kind of food that
+          makes a house feel like home, no matter where you are. Made fresh for every single order, no exceptions.
+        </p>
+        <a href="#menu" class="btn-brown">Browse the menu →</a>
+      </div>
+
+      <div>
+        <div class="feature-receipt glass-card">
+          <div class="receipt-row">
+            <span class="receipt-key">Made fresh per order</span>
+            <span class="receipt-val">Always</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-key">Homemade since</span>
+            <span class="receipt-val">Day One</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-key">Tray sizes</span>
+            <span class="receipt-val">SML · MED · LRG</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-key">Location</span>
+            <span class="receipt-val">Calgary, AB</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-key">Order method</span>
+            <span class="receipt-val">By request</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-key">Shortcuts taken</span>
+            <span class="receipt-val">None</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- scallop cream → brown (via lime header) -->
+  <svg class="scallop-into-brown" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path
+      d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z"
+      fill="#c8f000" />
+  </svg>
+
+  <!-- ══════════════════════════════ MENU -->
+  <section id="menu">
+
+    <!-- lime header -->
+    <div class="menu-header">
+      <div class="menu-header-left">
+        <p class="eyebrow" style="color: rgba(28,15,4,0.5);">What's Cooking</p>
+        <h2 class="menu-title">Our Menu</h2>
+        <p class="menu-tagline">Lutong bahay na may pagmamahal</p>
+      </div>
+      <div class="menu-header-right">
+        <p class="menu-note">All tray sizes in Small, Medium and Large.<br>Small 30×24×4.3 cm · Medium 30×24×6
+          cm<br>Large 33×26×7 cm · Prices subject to change.</p>
+      </div>
+    </div>
+
+    <!-- scallop lime → cream for nav -->
+    <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+      style="display:block; background: var(--lime); margin-bottom:-1px;">
+      <path
+        d="M0,56 L0,28 Q20,0 40,28 Q60,56 80,28 Q100,0 120,28 Q140,56 160,28 Q180,0 200,28 Q220,56 240,28 Q260,0 280,28 Q300,56 320,28 Q340,0 360,28 Q380,56 400,28 Q420,0 440,28 Q460,56 480,28 Q500,0 520,28 Q540,56 560,28 Q580,0 600,28 Q620,56 640,28 Q660,0 680,28 Q700,56 720,28 Q740,0 760,28 Q780,56 800,28 Q820,0 840,28 Q860,56 880,28 Q900,0 920,28 Q940,56 960,28 Q980,0 1000,28 Q1020,56 1040,28 Q1060,0 1080,28 Q1100,56 1120,28 Q1140,0 1160,28 Q1180,56 1200,28 Q1220,0 1240,28 Q1260,56 1280,28 Q1300,0 1320,28 Q1340,56 1360,28 Q1380,0 1400,28 Q1420,56 1440,28 L1440,56 Z"
+        fill="#f2e8d5" />
+    </svg>
+
+    <!-- category nav on cream -->
+    <div class="menu-nav">
+      <button class="menu-nav-btn active" onclick="switchCat('pork',this)">Pork</button>
+      <button class="menu-nav-btn" onclick="switchCat('special',this)">Special Pork</button>
+      <button class="menu-nav-btn" onclick="switchCat('chicken',this)">Chicken</button>
+      <button class="menu-nav-btn" onclick="switchCat('beef',this)">Beef</button>
+      <button class="menu-nav-btn" onclick="switchCat('roasted',this)">Roasted</button>
+      <button class="menu-nav-btn" onclick="switchCat('veg',this)">Vegetable</button>
+      <button class="menu-nav-btn" onclick="switchCat('seafood',this)">Seafood</button>
+      <button class="menu-nav-btn" onclick="switchCat('noodles',this)">Noodles</button>
+      <button class="menu-nav-btn" onclick="switchCat('spring',this)">Spring Roll</button>
+    </div>
+
+    <!-- menu body on cream -->
+    <div class="menu-body">
+
+      <div class="menu-cat active" id="cat-pork">
+        <div class="cat-header">
+          <h3 class="cat-name">Pork</h3>
+          <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Sisig</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Igado</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Kaldereta</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Menudo</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Bicol Express</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Bopis</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Binagoongan</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Giniling</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Adobo</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-special">
+        <div class="cat-header">
+          <h3 class="cat-name">Special Pork</h3>
+          <span class="cat-price">One Size $100 · 3.5 kg</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Lechon Belly</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-chicken">
+        <div class="cat-header">
+          <h3 class="cat-name">Chicken</h3>
+          <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Chicken Afritada</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Chicken Mushroom in White Sauce</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Chicken Curry</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Chicken Kaldereta</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-beef">
+        <div class="cat-header">
+          <h3 class="cat-name">Beef</h3>
+          <span class="cat-price">SML $60 · MED $90 · LRG $110</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Beef Kaldereta</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Beef Broccoli</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Bistek</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Beef Kare-Kare</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-roasted">
+        <div class="cat-header">
+          <h3 class="cat-name">Roasted</h3>
+          <span class="cat-price">Ask for pricing</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Roasted Chicken</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Roasted Beef</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-veg">
+        <div class="cat-header">
+          <h3 class="cat-name">Vegetable</h3>
+          <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Pinakbet</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Chopsuey</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Laing</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-seafood">
+        <div class="cat-header">
+          <h3 class="cat-name">Seafood</h3>
+          <span class="cat-price">SML $70 · MED $100 · LRG $130</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Seafood Boil</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Baked Mussels</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Baked Salmon</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-noodles">
+        <div class="cat-header">
+          <h3 class="cat-name">Noodles</h3>
+          <span class="cat-price">SML $50 · MED $70 · LRG $90</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Pansit Bihon</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Bihon Canton</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Fresh Miki Guisado</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Palabok</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Carbonara</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-spring">
+        <div class="cat-header">
+          <h3 class="cat-name">Spring Roll</h3>
+          <span class="cat-price">$10 per dozen</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Spring Roll</div>
+            <div class="dish-desc"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /menu-body -->
+  </section>
+
+  <!-- scallop cream → lime for order section -->
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+    style="display:block; background: var(--cream); margin-bottom:-1px;">
+    <path
+      d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z"
+      fill="#c8f000" />
+  </svg>
+
+  <!-- ══════════════════════════════ ORDER CTA -->
+  <section id="order">
+    <div class="order-grid">
+      <div class="order-left">
+        <p class="eyebrow" style="color: rgba(28,15,4,0.5);">Ready to Order?</p>
+        <p class="eyebrow"
+          style="color: var(--brown); background: var(--lime); padding: 8px 16px; display: inline-block; border-radius: 4px; margin-bottom: 16px;">
+          Orders Available Friday, Saturday, Sunday Only</p>
+        <h2 class="order-heading">
+          Let's make it happen.
+          <em>Fresh. Every time.</em>
+        </h2>
+        <p class="order-sub">Just message us or give us a call — we'll handle everything from there.</p>
+        <div class="order-btns">
+          <a href="#" class="btn-brown-solid">Message on Facebook</a>
+          <a href="#" class="btn-outline-brown">Call us</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="order-steps">
+          <div class="order-step">
+            <span class="step-n">01</span>
+            <span class="step-txt">Pick your dishes and choose a tray size — Small, Medium, or Large</span>
+          </div>
+          <div class="order-step">
+            <span class="step-n">02</span>
+            <span class="step-txt">Message us on Facebook or give us a call. That's genuinely it</span>
+          </div>
+          <div class="order-step">
+            <span class="step-n">03</span>
+            <span class="step-txt">We cook it fresh and arrange pickup or delivery for you</span>
+          </div>
+          <div class="order-step">
+            <span class="step-n">04</span>
+            <span class="step-txt">Enjoy homemade Filipino food the way it's meant to be</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- scallop lime → brown for contact -->
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+    style="display:block; background: var(--lime); margin-bottom:-1px;">
+    <path
+      d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z"
+      fill="#1c0f04" />
+  </svg>
+
+  <!-- ══════════════════════════════ CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div>
+        <p class="eyebrow" style="color: var(--lime); opacity: 0.7;">Get in Touch</p>
+        <h2 class="contact-heading">
+          Reach out.
+          <em>We'd love to hear from you.</em>
+        </h2>
+        <ul class="contact-list">
+          <li><span class="cl-label">Phone</span><span class="cl-value">Coming soon</span></li>
+          <li><span class="cl-label">Email</span><span class="cl-value">Coming soon</span></li>
+          <li><span class="cl-label">Facebook</span><span class="cl-value">Coming soon</span></li>
+          <li><span class="cl-label">Instagram</span><span class="cl-value">Coming soon</span></li>
+          <li><span class="cl-label">Location</span><span class="cl-value">Calgary, Alberta</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="dark-order-card glass-dark">
+          <p class="eyebrow">How It Works</p>
+          <h3 class="doc-heading">Orders by <em>Request</em></h3>
+          <p class="doc-sub">All food is made fresh for every order. Easy as 1, 2, 3.</p>
+          <ol class="dark-steps">
+            <li><span class="ds-num">1</span><span class="ds-txt">Browse the menu and pick your dishes and tray
+                size</span></li>
+            <li><span class="ds-num">2</span><span class="ds-txt">Message us on Facebook or give us a call</span></li>
+            <li><span class="ds-num">3</span><span class="ds-txt">We confirm and arrange pickup or delivery</span></li>
+            <li><span class="ds-num">4</span><span class="ds-txt">Enjoy fresh, homemade Filipino food</span></li>
+          </ol>
+          <a href="#menu" class="btn-brown-solid">See the Menu →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Ernesto<span>.</span>Kitchen</span>
+    <span class="footer-copy">Lutong bahay na may pagmamahal · Calgary, AB</span>
+  </footer>
+
+  <!-- STICKY BUTTONS -->
+  <div class="sticky-order">
+    <a href="#order" class="sticky-btn glass-btn">Order Now</a>
+    <button class="sticky-btn glass-btn sticky-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   </div>
 
-  <!-- menu body on cream -->
-  <div class="menu-body">
-
-    <div class="menu-cat active" id="cat-pork">
-      <div class="cat-header">
-        <h3 class="cat-name">Pork</h3>
-        <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Sisig</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Igado</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Kaldereta</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Menudo</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Bicol Express</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Bopis</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Binagoongan</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Giniling</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Adobo</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-special">
-      <div class="cat-header">
-        <h3 class="cat-name">Special Pork</h3>
-        <span class="cat-price">One Size $100 · 3.5 kg</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Lechon Belly</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-chicken">
-      <div class="cat-header">
-        <h3 class="cat-name">Chicken</h3>
-        <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Chicken Afritada</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Chicken Mushroom in White Sauce</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Chicken Curry</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Chicken Kaldereta</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-beef">
-      <div class="cat-header">
-        <h3 class="cat-name">Beef</h3>
-        <span class="cat-price">SML $60 · MED $90 · LRG $110</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Beef Kaldereta</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Beef Broccoli</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Bistek</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Beef Kare-Kare</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-roasted">
-      <div class="cat-header">
-        <h3 class="cat-name">Roasted</h3>
-        <span class="cat-price">Ask for pricing</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Roasted Chicken</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Roasted Beef</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-veg">
-      <div class="cat-header">
-        <h3 class="cat-name">Vegetable</h3>
-        <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Pinakbet</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Chopsuey</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Laing</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-seafood">
-      <div class="cat-header">
-        <h3 class="cat-name">Seafood</h3>
-        <span class="cat-price">SML $70 · MED $100 · LRG $130</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Seafood Boil</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Baked Mussels</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Baked Salmon</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-noodles">
-      <div class="cat-header">
-        <h3 class="cat-name">Noodles</h3>
-        <span class="cat-price">SML $50 · MED $70 · LRG $90</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Pansit Bihon</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Bihon Canton</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Fresh Miki Guisado</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Palabok</div><div class="dish-desc"></div></div></div>
-      <div class="dish"><div><div class="dish-name">Carbonara</div><div class="dish-desc"></div></div></div>
-    </div>
-
-    <div class="menu-cat" id="cat-spring">
-      <div class="cat-header">
-        <h3 class="cat-name">Spring Roll</h3>
-        <span class="cat-price">$10 per dozen</span>
-      </div>
-      <div class="dish"><div><div class="dish-name">Spring Roll</div><div class="dish-desc"></div></div></div>
-    </div>
-
-  </div><!-- /menu-body -->
-</section>
-
-<!-- scallop cream → lime for order section -->
-<svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block; background: var(--cream); margin-bottom:-1px;">
-  <path d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z" fill="#c8f000"/>
-</svg>
-
-<!-- ══════════════════════════════ ORDER CTA -->
-<section id="order">
-  <div class="order-grid">
-    <div class="order-left">
-      <p class="eyebrow" style="color: rgba(28,15,4,0.5);">Ready to Order?</p>
-      <p class="eyebrow" style="color: var(--brown); background: var(--lime); padding: 8px 16px; display: inline-block; border-radius: 4px; margin-bottom: 16px;">Orders Available Friday - Sunday Only</p>
-      <h2 class="order-heading">
-        Let's make it happen.
-        <em>Fresh. Every time.</em>
-      </h2>
-      <p class="order-sub">Just message us or give us a call — we'll handle everything from there.</p>
-      <div class="order-btns">
-        <a href="#" class="btn-brown-solid">Message on Facebook</a>
-        <a href="#" class="btn-outline-brown">Call us</a>
-      </div>
-    </div>
-
-    <div>
-      <div class="order-steps">
-        <div class="order-step">
-          <span class="step-n">01</span>
-          <span class="step-txt">Pick your dishes and choose a tray size — Small, Medium, or Large</span>
-        </div>
-        <div class="order-step">
-          <span class="step-n">02</span>
-          <span class="step-txt">Message us on Facebook or give us a call. That's genuinely it</span>
-        </div>
-        <div class="order-step">
-          <span class="step-n">03</span>
-          <span class="step-txt">We cook it fresh and arrange pickup or delivery for you</span>
-        </div>
-        <div class="order-step">
-          <span class="step-n">04</span>
-          <span class="step-txt">Enjoy homemade Filipino food the way it's meant to be</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- scallop lime → brown for contact -->
-<svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block; background: var(--lime); margin-bottom:-1px;">
-  <path d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z" fill="#1c0f04"/>
-</svg>
-
-<!-- ══════════════════════════════ CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div>
-      <p class="eyebrow" style="color: var(--lime); opacity: 0.7;">Get in Touch</p>
-      <h2 class="contact-heading">
-        Reach out.
-        <em>We'd love to hear from you.</em>
-      </h2>
-      <ul class="contact-list">
-        <li><span class="cl-label">Phone</span><span class="cl-value">Coming soon</span></li>
-        <li><span class="cl-label">Email</span><span class="cl-value">Coming soon</span></li>
-        <li><span class="cl-label">Facebook</span><span class="cl-value">Coming soon</span></li>
-        <li><span class="cl-label">Instagram</span><span class="cl-value">Coming soon</span></li>
-        <li><span class="cl-label">Location</span><span class="cl-value">Calgary, Alberta</span></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="dark-order-card glass-dark">
-        <p class="eyebrow">How It Works</p>
-        <h3 class="doc-heading">Orders by <em>Request</em></h3>
-        <p class="doc-sub">All food is made fresh for every order. Easy as 1, 2, 3.</p>
-        <ol class="dark-steps">
-          <li><span class="ds-num">1</span><span class="ds-txt">Browse the menu and pick your dishes and tray size</span></li>
-          <li><span class="ds-num">2</span><span class="ds-txt">Message us on Facebook or give us a call</span></li>
-          <li><span class="ds-num">3</span><span class="ds-txt">We confirm and arrange pickup or delivery</span></li>
-          <li><span class="ds-num">4</span><span class="ds-txt">Enjoy fresh, homemade Filipino food</span></li>
-        </ol>
-        <a href="#menu" class="btn-brown-solid">See the Menu →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">Ernesto<span>.</span>Kitchen</span>
-  <span class="footer-copy">Lutong bahay na may pagmamahal · Calgary, AB</span>
-</footer>
-
-<!-- STICKY BUTTONS -->
-<div class="sticky-order">
-  <a href="#order" class="sticky-btn glass-btn">Order Now</a>
-  <button class="sticky-btn glass-btn sticky-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-</div>
-
-<script>
-  // cursor
-  const cur = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top  = e.clientY + 'px';
-  });
-  
-  // Add glass cursor effect on glass elements
-  document.querySelectorAll('.glass, .glass-card, .glass-dark, .glass-btn').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cur.classList.add('glass-cursor');
+  <script>
+    // cursor
+    const cur = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top = e.clientY + 'px';
     });
-    el.addEventListener('mouseleave', () => {
-      cur.classList.remove('glass-cursor');
-    });
-  });
-  
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cur.classList.add('hover'));
-    el.addEventListener('mouseleave', () => {
-      cur.classList.remove('hover');
-      cur.classList.remove('glass-cursor');
-    });
-  });
 
-  // menu category switching
-  function switchCat(id, btn) {
-    document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
-    document.querySelectorAll('.menu-nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('cat-' + id).classList.add('active');
-    btn.classList.add('active');
-  }
-
-  // nav active state on scroll
-  const sections = ['hero','story','menu','order','contact'];
-  const navLinks = {
-    hero: document.querySelector('a[href="#hero"]'),
-    menu: document.querySelector('a[href="#menu"]'),
-    contact: document.querySelector('a[href="#contact"]'),
-  };
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY + 120;
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
-        Object.values(navLinks).forEach(a => a && a.classList.remove('active'));
-        const key = id === 'story' || id === 'order' ? 'hero' : id;
-        if (navLinks[key]) navLinks[key].classList.add('active');
-      }
+    // Add glass cursor effect on glass elements
+    document.querySelectorAll('.glass, .glass-card, .glass-dark, .glass-btn').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cur.classList.add('glass-cursor');
+      });
+      el.addEventListener('mouseleave', () => {
+        cur.classList.remove('glass-cursor');
+      });
     });
-  });
-</script>
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+      el.addEventListener('mouseleave', () => {
+        cur.classList.remove('hover');
+        cur.classList.remove('glass-cursor');
+      });
+    });
+
+    // menu category switching
+    function switchCat(id, btn) {
+      document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.menu-nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('cat-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // nav active state on scroll
+    const sections = ['hero', 'story', 'menu', 'order', 'contact'];
+    const navLinks = {
+      hero: document.querySelector('a[href="#hero"]'),
+      menu: document.querySelector('a[href="#menu"]'),
+      contact: document.querySelector('a[href="#contact"]'),
+    };
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 120;
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
+          Object.values(navLinks).forEach(a => a && a.classList.remove('active'));
+          const key = id === 'story' || id === 'order' ? 'hero' : id;
+          if (navLinks[key]) navLinks[key].classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>
