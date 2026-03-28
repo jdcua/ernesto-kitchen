@@ -5,20 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ernesto Kitchen</title>
+  <meta name="description" content="Ernesto Kitchen - Authentic Filipino home cooking in Calgary, AB. Made with love. Order by request - Small, Medium, and Large trays available.">
+  <meta name="keywords" content="Filipino food, Filipino restaurant, Calgary, lutong bahay, homemade Filipino, Filipino catering, Filipino trays">
+  <meta property="og:title" content="Ernesto Kitchen">
+  <meta property="og:description" content="Authentic Filipino home cooking in Calgary, AB. Made with love.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>E.</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
     rel="stylesheet">
   <style>
     :root {
       --lime: #c8f000;
-      --lime-dim: #a8cc00;
       --brown: #1c0f04;
       --brown-mid: #2e1a08;
-      --brown-light: #4a2e12;
       --cream: #f2e8d5;
-      --cream-dark: #e8dbc4;
       --rust: #c4521a;
       --muted: #8a6a44;
       --ink: #1c0f04;
@@ -41,29 +44,22 @@
       color: var(--brown);
       font-family: 'Courier Prime', monospace;
       overflow-x: hidden;
-      cursor: none;
     }
 
     /* ── GLASSMORPHISM ─────────────────────────────── */
     .glass {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
 
     .glass-dark {
       background: rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
       box-shadow:
@@ -73,8 +69,6 @@
 
     .glass-btn {
       background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       transition: all 0.2s ease;
     }
@@ -85,43 +79,8 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
-    /* ── CUSTOM CURSOR ─────────────────────────────── */
-    .cursor {
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      background: var(--brown);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
-      mix-blend-mode: multiply;
-    }
-
-    .cursor.hover {
-      width: 40px;
-      height: 40px;
-      background: var(--rust);
-    }
-
-    .cursor.glass-cursor {
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      mix-blend-mode: normal;
-    }
-
     /* ── NOISE ─────────────────────────────────────── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9000;
-    }
+
 
     /* ── NAV ───────────────────────────────────────── */
     nav {
@@ -134,7 +93,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px 48px;
-      mix-blend-mode: multiply;
+      background: var(--lime);
+      border-bottom: 1px solid rgba(28, 15, 4, 0.1);
     }
 
     .nav-logo {
@@ -184,40 +144,52 @@
       grid-template-rows: 1fr auto;
       position: relative;
       overflow: hidden;
-      padding-top: 80px;
+      padding-top: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.08;
+      background-size: cover;
+      background-position: center;
     }
 
     .hero-inner {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 48px 0;
+      justify-content: center;
+      align-items: stretch;
+      padding: 80px 0 0;
       position: relative;
       z-index: 2;
+      min-height: 100vh;
     }
 
-    /* phrase-first hero */
+    /* phrase-first hero - edge to edge */
     .hero-phrase {
       display: flex;
       flex-direction: column;
       gap: 0;
+      width: 100vw;
     }
 
     .phrase-line {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(4.5rem, 11vw, 10rem);
-      line-height: 0.95;
+      font-size: clamp(6rem, 22vw, 28rem);
+      line-height: 0.85;
       color: var(--brown);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       display: block;
+      width: 100%;
+      padding: 0;
+      text-align: center;
     }
 
     .phrase-line-2 {
-      padding-left: clamp(2rem, 6vw, 6rem);
-    }
-
-    .phrase-line-3 {
-      padding-left: clamp(4rem, 12vw, 12rem);
+      padding-left: 0;
+      margin-top: -0.08em;
     }
 
     .phrase-line em {
@@ -228,16 +200,17 @@
 
     .hero-meta {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 28px 0 0;
-      border-top: 1px solid rgba(28, 15, 4, 0.2);
-      margin-top: 20px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 40px 0 0;
     }
 
     .hero-identity {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 6px;
     }
 
@@ -251,17 +224,18 @@
 
     .hero-location {
       font-family: 'Courier Prime', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--brown);
-      opacity: 0.45;
+      opacity: 0.5;
+      text-align: center;
     }
 
     .hero-right {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: center;
       gap: 12px;
     }
 
@@ -270,30 +244,30 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 100px;
-      height: 100px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      border: 1.5px solid var(--brown);
+      border: 2px solid var(--brown);
       text-align: center;
-      padding: 12px;
-      transform: rotate(12deg);
-      opacity: 0.5;
+      padding: 16px;
+      transform: rotate(0deg);
+      opacity: 0.6;
     }
 
     .hero-badge-top {
-      font-size: 0.48rem;
+      font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
     .hero-badge-main {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.8rem;
       line-height: 1;
     }
 
     .hero-badge-sub {
-      font-size: 0.45rem;
+      font-size: 0.55rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       opacity: 0.6;
@@ -311,7 +285,7 @@
     .hero-marquee-wrap {
       background: var(--brown);
       overflow: hidden;
-      padding: 14px 0;
+      padding: 20px 0;
       margin-top: 32px;
     }
 
@@ -320,15 +294,16 @@
       gap: 0;
       animation: marquee 22s linear infinite;
       white-space: nowrap;
+      justify-content: center;
     }
 
     .hero-marquee span {
       font-family: 'Courier Prime', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
+      font-size: 0.9rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--lime);
-      padding: 0 32px;
+      padding: 0 40px;
       flex-shrink: 0;
       opacity: 0.8;
     }
@@ -336,7 +311,7 @@
     .hero-marquee span.dot {
       color: var(--rust);
       opacity: 1;
-      padding: 0 8px;
+      padding: 0 12px;
     }
 
     @keyframes marquee {
@@ -441,7 +416,7 @@
       text-decoration: none;
       padding: 15px 28px;
       border: none;
-      cursor: none;
+      
       transition: transform 0.15s, box-shadow 0.15s;
       margin-top: 40px;
     }
@@ -536,26 +511,28 @@
     }
 
     .menu-note {
-      font-size: 0.65rem;
+      font-size: 0.9rem;
       color: var(--brown);
-      opacity: 0.5;
+      opacity: 0.7;
       line-height: 1.6;
-      max-width: 280px;
-      font-style: italic;
+      max-width: 320px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
     }
 
-    /* category nav — on the cream paper after scallop */
+    /* category nav - on the cream paper after scallop */
     .menu-nav {
       background: var(--cream);
-      padding: 0 48px;
+      padding: 16px 48px;
       display: flex;
       align-items: stretch;
       overflow-x: auto;
       scrollbar-width: none;
-      border-bottom: 1px dashed rgba(28, 15, 4, 0.15);
+      border-bottom: 2px solid var(--brown);
       position: sticky;
       top: 60px;
       z-index: 100;
+      gap: 8px;
     }
 
     .menu-nav::-webkit-scrollbar {
@@ -564,35 +541,36 @@
 
     .menu-nav-btn {
       font-family: 'Courier Prime', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--brown);
       font-weight: 700;
-      cursor: none;
-      padding: 16px 24px;
-      border: none;
-      background: rgba(28, 15, 4, 0.04);
+      
+      padding: 14px 20px;
+      border: 1.5px solid var(--brown);
+      background: transparent;
       position: relative;
       white-space: nowrap;
       flex-shrink: 0;
       transition: all 0.2s;
-      border-right: 1px solid rgba(28, 15, 4, 0.1);
     }
 
     .menu-nav-btn:first-child {
-      padding-left: 24px;
+      padding-left: 20px;
     }
 
     .menu-nav-btn:hover {
-      color: var(--brown);
-      background: rgba(28, 15, 4, 0.08);
+      color: var(--lime);
+      background: var(--brown);
+      border-color: var(--brown);
     }
 
     .menu-nav-btn.active {
-      color: var(--brown);
+      color: var(--cream);
       font-weight: 700;
-      background: var(--lime);
+      background: var(--brown);
+      border-color: var(--brown);
     }
 
     /* menu body */
@@ -628,17 +606,17 @@
 
     .cat-price {
       font-family: 'Courier Prime', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--rust);
-      padding: 4px 10px;
-      border: 1px solid var(--rust);
+      padding: 8px 16px;
+      border: 1.5px solid var(--rust);
       white-space: nowrap;
       margin-left: auto;
     }
 
-    /* dish rows — dense and rich */
+    /* dish rows - dense and rich */
     .dish {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -673,6 +651,24 @@
       color: var(--muted);
       font-style: italic;
       line-height: 1.5;
+    }
+
+    .dish-price {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--rust);
+      white-space: nowrap;
+      background: rgba(242, 232, 213, 0.9);
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    .dish:hover .dish-price {
+      opacity: 1;
     }
 
     /* ── ORDER CTA ──────────────────────────────────── */
@@ -739,7 +735,7 @@
       text-decoration: none;
       padding: 15px 28px;
       border: none;
-      cursor: none;
+      
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
@@ -762,7 +758,7 @@
       text-decoration: none;
       padding: 15px 28px;
       border: 1.5px solid var(--brown);
-      cursor: none;
+      
       transition: background 0.15s, color 0.15s;
     }
 
@@ -993,7 +989,7 @@
       text-transform: uppercase;
       padding: 12px 20px;
       border: none;
-      cursor: none;
+      
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -1021,8 +1017,6 @@
     /* Glass sticky button */
     .sticky-btn.glass-btn {
       background: rgba(200, 240, 0, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
@@ -1156,8 +1150,6 @@
 
 <body>
 
-  <div class="cursor" id="cursor"></div>
-
   <!-- NAV -->
   <nav>
     <a href="#hero" class="nav-logo">Ernesto<span>.</span></a>
@@ -1170,18 +1162,17 @@
 
   <!-- ══════════════════════════════ HERO -->
   <section id="hero">
+    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=1920&q=80');"></div>
     <div class="hero-inner">
 
       <!-- phrase lands first, massive -->
       <div class="hero-phrase fu">
-        <span class="phrase-line">Lutong</span>
-        <span class="phrase-line phrase-line-2">bahay na</span>
-        <span class="phrase-line phrase-line-3">may <em>pagmamahal</em></span>
+        <span class="phrase-line">Ernesto</span>
+        <span class="phrase-line phrase-line-2">Kitchen</span>
       </div>
 
       <div class="hero-meta fu2">
         <div class="hero-identity">
-          <span class="hero-name">ERNESTO KITCHEN</span>
           <span class="hero-location">Calgary, AB &nbsp;·&nbsp; Orders by request</span>
         </div>
         <div class="hero-right">
@@ -1190,7 +1181,6 @@
             <span class="hero-badge-main">Since<br>Day<br>One</span>
             <span class="hero-badge-sub">Calgary AB</span>
           </div>
-          <span class="hero-scroll">Scroll ↓</span>
         </div>
       </div>
 
@@ -1221,7 +1211,7 @@
     </div>
   </section>
 
-  <!-- scallop lime → cream -->
+  <!-- scallop lime - cream -->
   <svg class="scallop-into-cream" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path
       d="M0,56 L0,28 Q20,0 40,28 Q60,56 80,28 Q100,0 120,28 Q140,56 160,28 Q180,0 200,28 Q220,56 240,28 Q260,0 280,28 Q300,56 320,28 Q340,0 360,28 Q380,56 400,28 Q420,0 440,28 Q460,56 480,28 Q500,0 520,28 Q540,56 560,28 Q580,0 600,28 Q620,56 640,28 Q660,0 680,28 Q700,56 720,28 Q740,0 760,28 Q780,56 800,28 Q820,0 840,28 Q860,56 880,28 Q900,0 920,28 Q940,56 960,28 Q980,0 1000,28 Q1020,56 1040,28 Q1060,0 1080,28 Q1100,56 1120,28 Q1140,0 1160,28 Q1180,56 1200,28 Q1220,0 1240,28 Q1260,56 1280,28 Q1300,0 1320,28 Q1340,56 1360,28 Q1380,0 1400,28 Q1420,56 1440,28 L1440,56 Z"
@@ -1238,7 +1228,7 @@
         </h2>
         <div class="story-rule"></div>
         <p class="story-body">
-          Home-cooked with love. Every tray carries the flavours passed down through generations — the kind of food that
+          Home-cooked with love. Every tray carries the flavours passed down through generations. The kind of food that
           makes a house feel like home, no matter where you are. Made fresh for every single order, no exceptions.
         </p>
         <a href="#menu" class="btn-brown">Browse the menu →</a>
@@ -1275,7 +1265,7 @@
     </div>
   </section>
 
-  <!-- scallop cream → brown (via lime header) -->
+  <!-- scallop cream - brown (via lime header) -->
   <svg class="scallop-into-brown" viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path
       d="M0,0 L0,28 Q20,56 40,28 Q60,0 80,28 Q100,56 120,28 Q140,0 160,28 Q180,56 200,28 Q220,0 240,28 Q260,56 280,28 Q300,0 320,28 Q340,56 360,28 Q380,0 400,28 Q420,56 440,28 Q460,0 480,28 Q500,56 520,28 Q540,0 560,28 Q580,56 600,28 Q620,0 640,28 Q660,56 680,28 Q700,0 720,28 Q740,56 760,28 Q780,0 800,28 Q820,56 840,28 Q860,0 880,28 Q900,56 920,28 Q940,0 960,28 Q980,56 1000,28 Q1020,0 1040,28 Q1060,56 1080,28 Q1100,0 1120,28 Q1140,56 1160,28 Q1180,0 1200,28 Q1220,56 1240,28 Q1260,0 1280,28 Q1300,56 1320,28 Q1340,0 1360,28 Q1380,56 1400,28 Q1420,0 1440,28 L1440,0 Z"
@@ -1290,15 +1280,13 @@
       <div class="menu-header-left">
         <p class="eyebrow" style="color: rgba(28,15,4,0.5);">What's Cooking</p>
         <h2 class="menu-title">Our Menu</h2>
-        <p class="menu-tagline">Lutong bahay na may pagmamahal</p>
       </div>
       <div class="menu-header-right">
-        <p class="menu-note">All tray sizes in Small, Medium and Large.<br>Small 30×24×4.3 cm · Medium 30×24×6
-          cm<br>Large 33×26×7 cm · Prices subject to change.</p>
+        <p class="menu-note">All tray sizes in Small, Medium and Large.<br>Prices subject to change.</p>
       </div>
     </div>
 
-    <!-- scallop lime → cream for nav -->
+    <!-- scallop lime - cream for nav -->
     <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
       style="display:block; background: var(--lime); margin-bottom:-1px;">
       <path
@@ -1313,6 +1301,7 @@
       <button class="menu-nav-btn" onclick="switchCat('chicken',this)">Chicken</button>
       <button class="menu-nav-btn" onclick="switchCat('beef',this)">Beef</button>
       <button class="menu-nav-btn" onclick="switchCat('roasted',this)">Roasted</button>
+      <button class="menu-nav-btn" onclick="switchCat('western',this)">Western Classics</button>
       <button class="menu-nav-btn" onclick="switchCat('veg',this)">Vegetable</button>
       <button class="menu-nav-btn" onclick="switchCat('seafood',this)">Seafood</button>
       <button class="menu-nav-btn" onclick="switchCat('noodles',this)">Noodles</button>
@@ -1332,54 +1321,63 @@
             <div class="dish-name">Sisig</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Igado</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Kaldereta</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Menudo</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Bicol Express</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Bopis</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Binagoongan</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Giniling</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Adobo</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
       </div>
 
@@ -1393,6 +1391,7 @@
             <div class="dish-name">Lechon Belly</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$100</span>
         </div>
       </div>
 
@@ -1406,24 +1405,28 @@
             <div class="dish-name">Chicken Afritada</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Chicken Mushroom in White Sauce</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Chicken Curry</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Chicken Kaldereta</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
       </div>
 
@@ -1437,24 +1440,28 @@
             <div class="dish-name">Beef Kaldereta</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Beef Broccoli</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Bistek</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Beef Kare-Kare</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$60 · $90 · $110</span>
         </div>
       </div>
 
@@ -1468,12 +1475,14 @@
             <div class="dish-name">Roasted Chicken</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">Ask</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Roasted Beef</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">Ask</span>
         </div>
       </div>
 
@@ -1487,18 +1496,21 @@
             <div class="dish-name">Pinakbet</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Chopsuey</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Laing</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
       </div>
 
@@ -1512,18 +1524,21 @@
             <div class="dish-name">Seafood Boil</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$70 · $100 · $130</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Baked Mussels</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$70 · $100 · $130</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Baked Salmon</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$70 · $100 · $130</span>
         </div>
       </div>
 
@@ -1537,30 +1552,35 @@
             <div class="dish-name">Pansit Bihon</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Bihon Canton</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Fresh Miki Guisado</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Palabok</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
           <div>
             <div class="dish-name">Carbonara</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$50 · $70 · $90</span>
         </div>
       </div>
 
@@ -1574,13 +1594,63 @@
             <div class="dish-name">Spring Roll</div>
             <div class="dish-desc"></div>
           </div>
+          <span class="dish-price">$10 /dozen</span>
+        </div>
+      </div>
+
+      <div class="menu-cat" id="cat-western">
+        <div class="cat-header">
+          <h3 class="cat-name">Western Classics</h3>
+          <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Roast Beef Sandwich</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Double Patty Burger</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Smoked Meat Sandwich</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Beef Dip Sandwich</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Philly Steak Sandwich</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
+        </div>
+        <div class="dish">
+          <div>
+            <div class="dish-name">Club Sandwich</div>
+            <div class="dish-desc"></div>
+          </div>
+          <span class="dish-price">$50 · $80 · $100</span>
         </div>
       </div>
 
     </div><!-- /menu-body -->
   </section>
 
-  <!-- scallop cream → lime for order section -->
+  <!-- scallop cream - lime for order section -->
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
     style="display:block; background: var(--cream); margin-bottom:-1px;">
     <path
@@ -1600,7 +1670,7 @@
           Let's make it happen.
           <em>Fresh. Every time.</em>
         </h2>
-        <p class="order-sub">Just message us or give us a call — we'll handle everything from there.</p>
+        <p class="order-sub">Just message us or give us a call. We'll handle everything from there.</p>
         <div class="order-btns">
           <a href="#" class="btn-brown-solid">Message on Facebook</a>
           <a href="#" class="btn-outline-brown">Call us</a>
@@ -1611,7 +1681,7 @@
         <div class="order-steps">
           <div class="order-step">
             <span class="step-n">01</span>
-            <span class="step-txt">Pick your dishes and choose a tray size — Small, Medium, or Large</span>
+            <span class="step-txt">Pick your dishes and choose a tray size: Small, Medium, or Large</span>
           </div>
           <div class="order-step">
             <span class="step-n">02</span>
@@ -1630,7 +1700,7 @@
     </div>
   </section>
 
-  <!-- scallop lime → brown for contact -->
+  <!-- scallop lime - brown for contact -->
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
     style="display:block; background: var(--lime); margin-bottom:-1px;">
     <path
@@ -1687,31 +1757,6 @@
   </div>
 
   <script>
-    // cursor
-    const cur = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cur.style.left = e.clientX + 'px';
-      cur.style.top = e.clientY + 'px';
-    });
-
-    // Add glass cursor effect on glass elements
-    document.querySelectorAll('.glass, .glass-card, .glass-dark, .glass-btn').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cur.classList.add('glass-cursor');
-      });
-      el.addEventListener('mouseleave', () => {
-        cur.classList.remove('glass-cursor');
-      });
-    });
-
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => cur.classList.add('hover'));
-      el.addEventListener('mouseleave', () => {
-        cur.classList.remove('hover');
-        cur.classList.remove('glass-cursor');
-      });
-    });
-
     // menu category switching
     function switchCat(id, btn) {
       document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
