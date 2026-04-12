@@ -151,7 +151,7 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      opacity: 0.08;
+      opacity: 0.4;
       background-size: cover;
       background-position: center;
     }
@@ -619,7 +619,7 @@
     /* dish rows - dense and rich */
     .dish {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       align-items: baseline;
       gap: 20px;
       padding: 18px 0;
@@ -630,12 +630,118 @@
       padding-right: 48px;
     }
 
+    .dish-img-wrapper {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .dish-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .dish-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 15, 4, 0.6);
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lime);
+      font-size: 0.55rem;
+      font-family: 'Courier Prime', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px;
+    }
+
+    .dish-img-wrapper:hover .dish-overlay {
+      opacity: 1;
+    }
+
+    .dish-img-wrapper:hover .dish-img {
+      transform: scale(1.1);
+    }
+
     .dish:hover {
       background: rgba(200, 240, 0, 0.08);
     }
 
     .dish:hover .dish-name {
       color: var(--rust);
+    }
+
+    /* Lightbox Styles */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 10, 4, 0.95);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 85vh;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      background: var(--ink);
+    }
+
+    .lightbox-content img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: var(--lime);
+      font-size: 1.5rem;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.1em;
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: -45px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: var(--cream);
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
     }
 
     .dish-name {
@@ -1162,7 +1268,7 @@
 
   <!-- ══════════════════════════════ HERO -->
   <section id="hero">
-    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=1920&q=80');"></div>
+    <div class="hero-bg" style="background-image: url('./foodimages/heroshot.jpg'); background-size: cover; background-position: center;"></div>
     <div class="hero-inner">
 
       <!-- phrase lands first, massive -->
@@ -1317,65 +1423,74 @@
           <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/sisig.webp" alt="Sisig" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Sisig</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Sizzling, crispy pork bits with a tangy, savory kick.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/igado.webp" alt="Igado" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Igado</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Tender pork and liver cooked in a rich, garlicky sauce.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_kaldereta.webp" alt="Kaldereta" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Kaldereta</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Hearty pork stew slow-cooked in a bold tomato base.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/menudo.webp" alt="Menudo" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Menudo</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Chunky pork and potato in a comforting, home-style sauce.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/bicol_express.webp" alt="Bicol Express" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Bicol Express</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Creamy coconut pork with a fiery chili bite.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/bopis.webp" alt="Bopis" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Bopis</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Bold and spicy minced pork with a smoky, tangy finish.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/binagoongan.webp" alt="Binagoongan" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Binagoongan</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Tender pork braised in savory, punchy shrimp paste.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/giniling.webp" alt="Giniling" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Giniling</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Savory ground pork cooked with vegetables and a rich sauce.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/pork_adobo.webp" alt="Adobo" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Adobo</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Classic pork slow-braised in vinegar, garlic, and soy.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
@@ -1387,9 +1502,10 @@
           <span class="cat-price">One Size $100 · 3.5 kg</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/lechon_belly.webp" alt="Lechon Belly" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Lechon Belly</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Slow-roasted pork belly, crackling skin, juicy inside.</div>
           </div>
           <span class="dish-price">$100</span>
         </div>
@@ -1401,30 +1517,34 @@
           <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/chicken_afritada.webp" alt="Chicken Afritada" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Chicken Afritada</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Tender chicken simmered in a bright, vegetable-packed tomato sauce.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/chicken_mushroom_white_sauce.webp" alt="Chicken Mushroom" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Chicken Mushroom in White Sauce</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Creamy, savory chicken with earthy mushrooms in every bite.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/chicken_curry.webp" alt="Chicken Curry" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Chicken Curry</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Golden, aromatic curry with tender chicken and warm spices.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/chicken_kaldereta.webp" alt="Chicken Kaldereta" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Chicken Kaldereta</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Rich, saucy chicken stew with a deep tomato flavor.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
@@ -1436,30 +1556,34 @@
           <span class="cat-price">SML $60 · MED $90 · LRG $110</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_kaldereta.webp" alt="Beef Kaldereta" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Beef Kaldereta</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Melt-in-your-mouth beef in a hearty, bold tomato stew.</div>
           </div>
           <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_broccoli.webp" alt="Beef Broccoli" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Beef Broccoli</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Tender beef and fresh broccoli in a glossy savory sauce.</div>
           </div>
           <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/bistek.webp" alt="Bistek" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Bistek</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Thin-sliced beef in a tangy soy-calamansi sauce with onions.</div>
           </div>
           <span class="dish-price">$60 · $90 · $110</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_kare_kare.webp" alt="Beef Kare-Kare" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Beef Kare-Kare</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Rich oxtail stew in a thick, nutty peanut sauce.</div>
           </div>
           <span class="dish-price">$60 · $90 · $110</span>
         </div>
@@ -1471,16 +1595,18 @@
           <span class="cat-price">Ask for pricing</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roasted_chicken.webp" alt="Roasted Chicken" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Roasted Chicken</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Whole chicken, golden and juicy, roasted just right.</div>
           </div>
           <span class="dish-price">Ask</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roasted_beef.webp" alt="Roasted Beef" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Roasted Beef</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Slow-roasted beef, tender, flavorful, and beautifully carved.</div>
           </div>
           <span class="dish-price">Ask</span>
         </div>
@@ -1492,23 +1618,26 @@
           <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/pinakbet.webp" alt="Pinakbet" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Pinakbet</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">A colorful mix of vegetables in a savory shrimp paste.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/chopsuey.webp" alt="Chopsuey" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Chopsuey</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Fresh vegetables stir-fried in a light, flavorful sauce.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/laing.webp" alt="Laing" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Laing</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Creamy taro leaves slow-cooked in rich coconut milk.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
@@ -1520,23 +1649,26 @@
           <span class="cat-price">SML $70 · MED $100 · LRG $130</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/seafood_boil.webp" alt="Seafood Boil" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Seafood Boil</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">A festive mix of shellfish in a bold, buttery broth.</div>
           </div>
           <span class="dish-price">$70 · $100 · $130</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/baked_mussels.webp" alt="Baked Mussels" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Baked Mussels</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Plump mussels baked with a rich, cheesy topping.</div>
           </div>
           <span class="dish-price">$70 · $100 · $130</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/baked_salmon.webp" alt="Baked Salmon" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Baked Salmon</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Flaky, tender salmon baked to a golden finish.</div>
           </div>
           <span class="dish-price">$70 · $100 · $130</span>
         </div>
@@ -1548,37 +1680,42 @@
           <span class="cat-price">SML $50 · MED $70 · LRG $90</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/pansit_bihon.webp" alt="Pansit Bihon" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Pansit Bihon</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Light rice noodles stir-fried with vegetables and savory flavor.</div>
           </div>
           <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/bihon_canton.webp" alt="Bihon Canton" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Bihon Canton</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">A hearty mix of thin and egg noodles, perfectly stir-fried.</div>
           </div>
           <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/pancit_canton.webp" alt="Fresh Miki Guisado" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Fresh Miki Guisado</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Thick, fresh egg noodles sauteed with meat and vegetables.</div>
           </div>
           <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/palabok.webp" alt="Palabok" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Palabok</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Rice noodles topped with a golden shrimp sauce and fixings.</div>
           </div>
           <span class="dish-price">$50 · $70 · $90</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/carbonara.webp" alt="Carbonara" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Carbonara</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Creamy, rich pasta with a comforting, homestyle twist.</div>
           </div>
           <span class="dish-price">$50 · $70 · $90</span>
         </div>
@@ -1590,9 +1727,10 @@
           <span class="cat-price">$10 per dozen</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/spring_roll_2.webp" alt="Spring Roll" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Spring Roll</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Crispy golden rolls filled with savory pork and vegetables.</div>
           </div>
           <span class="dish-price">$10 /dozen</span>
         </div>
@@ -1604,44 +1742,50 @@
           <span class="cat-price">SML $50 · MED $80 · LRG $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Roast Beef Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Roast Beef Sandwich</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Slow-roasted beef piled high on soft, fresh bread.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/double_patty_burger.webp" alt="Double Patty Burger" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Double Patty Burger</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Two juicy beef patties, stacked and loaded with flavor.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Smoked Meat Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Smoked Meat Sandwich</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Tender smoked beef, thinly sliced and piled generously.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Beef Dip Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Beef Dip Sandwich</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Juicy roast beef on a roll, served with rich au jus.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Philly Steak Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Philly Steak Sandwich</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">Shaved steak with melted cheese on a toasted hoagie.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/double_patty_burger.webp" alt="Club Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Club Sandwich</div>
-            <div class="dish-desc"></div>
+            <div class="dish-desc">A triple-decker classic stacked with all the good stuff.</div>
           </div>
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
@@ -1756,7 +1900,7 @@
     <button class="sticky-btn glass-btn sticky-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   </div>
 
-  <script>
+    <script>
     // menu category switching
     function switchCat(id, btn) {
       document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
@@ -1784,7 +1928,82 @@
         }
       });
     });
-  </script>
-</body>
 
+    <script>
+    // menu category switching
+    function switchCat(id, btn) {
+      document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.menu-nav-btn').forEach(b => b.classList.remove('active'));
+      const target = document.getElementById('cat-' + id);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    // nav active state on scroll
+    const sections = ['hero', 'story', 'menu', 'order', 'contact'];
+    const navLinks = {
+      hero: document.querySelector('a[href="#hero"]'),
+      menu: document.querySelector('a[href="#menu"]'),
+      contact: document.querySelector('a[href="#contact"]'),
+    };
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 120;
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
+          Object.values(navLinks).forEach(a => a && a.classList.remove('active'));
+          const key = id === 'story' || id === 'order' ? 'hero' : id;
+          if (navLinks[key]) navLinks[key].classList.add('active');
+        }
+      });
+    });
+
+    // Lightbox Logic
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.innerHTML = `
+      <div class="lightbox-content">
+        <span class="lightbox-close">CLOSE ×</span>
+        <img src="" alt="Full view">
+        <div class="lightbox-caption"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('img');
+    const lightboxCap = lightbox.querySelector('.lightbox-caption');
+
+    // Use delegation for better performance and to handle dynamic content if any
+    document.addEventListener('click', (e) => {
+      const wrapper = e.target.closest('.dish-img-wrapper');
+      if (wrapper) {
+        const img = wrapper.querySelector('img');
+        const dish = wrapper.closest('.dish');
+        const dishName = dish ? dish.querySelector('.dish-name').textContent : 'Dish Image';
+        lightboxImg.src = img.src;
+        lightboxCap.textContent = dishName;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // close if clicked backdrop or close button
+      if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+  </body>
+</html>
+  </body>
+</html>
+</body>
 </html>

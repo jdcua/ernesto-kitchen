@@ -10,8 +10,7 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: 'index.html',
-        versionone: 'versiononeernesto.html'
+        main: 'index.html'
       }
     }
   }
