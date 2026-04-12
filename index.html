@@ -1268,7 +1268,7 @@
 
   <!-- ══════════════════════════════ HERO -->
   <section id="hero">
-    <div class="hero-bg" style="background-image: url('./foodimages/heroshot.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="hero-bg" style="background-image: url('./foodimages/heroshot.webp'); background-size: cover; background-position: center;"></div>
     <div class="hero-inner">
 
       <!-- phrase lands first, massive -->
@@ -1439,7 +1439,7 @@
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
-          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_kaldereta.webp" alt="Kaldereta" class="dish-img"><div class="dish-overlay">Click me!</div></div>
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/pork_kaldereta.webp" alt="Kaldereta" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Kaldereta</div>
             <div class="dish-desc">Hearty pork stew slow-cooked in a bold tomato base.</div>
@@ -1758,7 +1758,7 @@
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
-          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Smoked Meat Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/smoked_meat_sandwich.webp" alt="Smoked Meat Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Smoked Meat Sandwich</div>
             <div class="dish-desc">Tender smoked beef, thinly sliced and piled generously.</div>
@@ -1766,7 +1766,7 @@
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
-          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Beef Dip Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/beef_dip_sandwich.webp" alt="Beef Dip Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Beef Dip Sandwich</div>
             <div class="dish-desc">Juicy roast beef on a roll, served with rich au jus.</div>
@@ -1774,7 +1774,7 @@
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
-          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/roast_beef_sandwich.webp" alt="Philly Steak Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/philly_steak_sandwich.webp" alt="Philly Steak Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Philly Steak Sandwich</div>
             <div class="dish-desc">Shaved steak with melted cheese on a toasted hoagie.</div>
@@ -1782,7 +1782,7 @@
           <span class="dish-price">$50 · $80 · $100</span>
         </div>
         <div class="dish">
-          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/double_patty_burger.webp" alt="Club Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
+          <div class="dish-img-wrapper"><img loading="lazy" src="./foodimages/club_sandwich.webp" alt="Club Sandwich" class="dish-img"><div class="dish-overlay">Click me!</div></div>
           <div>
             <div class="dish-name">Club Sandwich</div>
             <div class="dish-desc">A triple-decker classic stacked with all the good stuff.</div>
@@ -1900,36 +1900,7 @@
     <button class="sticky-btn glass-btn sticky-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   </div>
 
-    <script>
-    // menu category switching
-    function switchCat(id, btn) {
-      document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.menu-nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('cat-' + id).classList.add('active');
-      btn.classList.add('active');
-    }
-
-    // nav active state on scroll
-    const sections = ['hero', 'story', 'menu', 'order', 'contact'];
-    const navLinks = {
-      hero: document.querySelector('a[href="#hero"]'),
-      menu: document.querySelector('a[href="#menu"]'),
-      contact: document.querySelector('a[href="#contact"]'),
-    };
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY + 120;
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
-          Object.values(navLinks).forEach(a => a && a.classList.remove('active'));
-          const key = id === 'story' || id === 'order' ? 'hero' : id;
-          if (navLinks[key]) navLinks[key].classList.add('active');
-        }
-      });
-    });
-
-    <script>
+  <script>
     // menu category switching
     function switchCat(id, btn) {
       document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
@@ -1974,7 +1945,6 @@
     const lightboxImg = lightbox.querySelector('img');
     const lightboxCap = lightbox.querySelector('.lightbox-caption');
 
-    // Use delegation for better performance and to handle dynamic content if any
     document.addEventListener('click', (e) => {
       const wrapper = e.target.closest('.dish-img-wrapper');
       if (wrapper) {
@@ -1987,7 +1957,6 @@
         document.body.style.overflow = 'hidden';
       }
 
-      // close if clicked backdrop or close button
       if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
@@ -2001,9 +1970,5 @@
       }
     });
   </script>
-  </body>
-</html>
-  </body>
-</html>
 </body>
 </html>
