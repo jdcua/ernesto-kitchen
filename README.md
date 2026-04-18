@@ -120,15 +120,10 @@ Connect your GitHub repository and it will auto-deploy on push.
 
 To get the website ready for public traffic, follow these steps:
 
-### 1. Update Contact Information
-- [ ] Replace placeholder phone number `1234567890` in `index.html` (search for WhatsApp links).
-- [ ] Update the **Contact Section** with actual Email, Phone, and Facebook/Instagram profile links.
-- [ ] Define the pickup/delivery zone in the "Location" field.
-
-### 2. Define Tray Sizes
+### 1. Define Tray Sizes
 - [ ] Add serving counts for S, M, and L trays (e.g., "Small: serves 4-6 people") in the menu header or descriptions.
 
-### 3. Lead Time & Delivery FAQs
+### 2. Lead Time & Delivery FAQs
 - [ ] Specify how much notice is required for orders (e.g., "48 hours lead time").
 - [ ] Confirm delivery areas and associated fees if any.
 

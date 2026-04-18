@@ -142,8 +142,8 @@
     .reveal {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform, opacity;
     }
 
@@ -154,25 +154,29 @@
 
     /* ── SHIMMER SKELETON ──────────────────────────── */
     @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     .shimmer-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, 
-        rgba(242, 232, 213, 0.1) 25%, 
-        rgba(242, 232, 213, 0.3) 50%, 
-        rgba(242, 232, 213, 0.1) 75%
-      );
+      background: linear-gradient(90deg,
+          rgba(242, 232, 213, 0.1) 25%,
+          rgba(242, 232, 213, 0.3) 50%,
+          rgba(242, 232, 213, 0.1) 75%);
       background-size: 200% 100%;
       animation: shimmer 2s infinite linear;
       z-index: 0;
       transition: opacity 0.4s ease;
     }
 
-    .dish-img.loaded + .shimmer-bg {
+    .dish-img.loaded+.shimmer-bg {
       opacity: 0;
       pointer-events: none;
     }
@@ -685,7 +689,8 @@
       overflow: hidden;
       cursor: pointer;
       flex-shrink: 0;
-      background: rgba(28, 15, 4, 0.05); /* subtle placeholder */
+      background: rgba(28, 15, 4, 0.05);
+      /* subtle placeholder */
     }
 
     .dish-img {
@@ -2161,8 +2166,8 @@
           <em>We'd love to hear from you.</em>
         </h2>
         <ul class="contact-list">
-          <li><span class="cl-label">Phone</span><span class="cl-value">Coming soon</span></li>
-          <li><span class="cl-label">Email</span><span class="cl-value">Coming soon</span></li>
+          <li><span class="cl-label">Phone</span><span class="cl-value">403-680-3249 (Rocky) / 403-714-3844 (Manny)</span></li>
+          <li><span class="cl-label">Email</span><span class="cl-value">ernestokitchen101@gmail.com</span></li>
           <li><span class="cl-label">Facebook</span><span class="cl-value">Coming soon</span></li>
           <li><span class="cl-label">Instagram</span><span class="cl-value">Coming soon</span></li>
           <li><span class="cl-label">Location</span><span class="cl-value">Calgary, Alberta</span></li>
@@ -2246,11 +2251,11 @@
     // 1. Instant Category Switching
     function switchCat(id, btn) {
       const targetId = 'cat-' + id;
-      
+
       state.cats.forEach(c => {
         c.classList.toggle('active', c.id === targetId);
       });
-      
+
       state.navBtns.forEach(b => {
         b.classList.toggle('active', b === btn);
       });
@@ -2334,14 +2339,14 @@
         const img = wrapper.querySelector('img');
         const dish = wrapper.closest('.dish');
         const dishName = dish ? dish.querySelector('.dish-name').textContent : 'Dish Image';
-        
+
         lightboxImg.src = img.src;
         lightboxCap.textContent = dishName;
-        
+
         const orderBtn = lightbox.querySelector('.lightbox-order-btn');
         const encodedMsg = encodeURIComponent(`Hi Ernesto Kitchen! I'm interested in ordering the ${dishName}. Please let me know how to proceed!`);
         orderBtn.href = `https://wa.me/1234567890?text=${encodedMsg}`;
-        
+
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
